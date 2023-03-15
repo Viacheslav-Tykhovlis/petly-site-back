@@ -4,7 +4,6 @@ const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger-kapusta.json");
 
-const financesRouter = require("./routes/api/financesRouter");
 const usersRouter = require("./routes/auth/usersRouter");
 
 const app = express();
@@ -15,8 +14,8 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/finances", financesRouter);
-app.use("/auth/users", usersRouter);
+app.use("", financesRouter);
+app.use("", usersRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res) => {
