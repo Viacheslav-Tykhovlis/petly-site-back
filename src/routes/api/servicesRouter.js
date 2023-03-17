@@ -4,12 +4,11 @@ const {
   aboutUserPets,
   servicesSidebar,
   news,
-  // noticesByTitle,
-  // noticesByCategory,
-  // addNotices,
-  // noticesId,
-  // addNoticesSelected,
-  // deleteNotices,
+  noticesByTitle,
+  noticesByCategory,
+  addNotices,
+  deleteNoticesByID,
+  addNoticesSelected,
   // notices,
   // noticesSelected,
 } = require("../../controllers/notices/noticesControlers");
@@ -33,15 +32,11 @@ servicesRouter.get("/news", news);
 // 6. створити ендпоінт для додавання оголошення до обраних
 // 11. створити ендпоінт для видалення оголошення авторизованого користувача створеного цим же користувачем
 
-// servicesRouter.get("/noticesByTitle", noticesByTitle);
-// servicesRouter.get("/notices/:noticesId", noticesId);
-// servicesRouter.get("/notices", noticesByCategory);
-// servicesRouter.get("/notices", noticesSelected);
-// servicesRouter.get("/notices", notices);
-// servicesRouter.delete("/:noticesId", deleteNotices);
-// servicesRouter.post("/notices", addNotices);
-// servicesRouter.post("/notices", addNoticesSelected);
-// servicesRouter.post("/notices", notices);
+servicesRouter.get("/noticesByTitle", noticesByTitle);
+servicesRouter.get("/notices", noticesByCategory);
+servicesRouter.post("/notices", addNotices);
+servicesRouter.delete("/:noticesId", deleteNoticesByID);
+servicesRouter.post("/notices_selected", addNoticesSelected);
 
 // 12. створити ендпоінт для отримання  особистої інформації про користувача, з коллекції users
 // 13. інформації про тварин корисувача, з коллекції pets.
