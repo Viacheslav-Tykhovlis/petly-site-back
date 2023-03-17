@@ -1,3 +1,56 @@
+const { News } = require("../../schemas/news");
+const { Sponsors } = require("../../schemas/sponsors");
+
+async function sponsors(req, res, next) {
+  const result = await Sponsors.find();
+  if (!result) {
+    return res.status(401).json({ message: "news not found" });
+  }
+
+  return res.status(200).json(result);
+}
+async function news(req, res, next) {
+  const result = await News.find();
+  if (!result) {
+    return res.status(401).json({ message: "news not found" });
+  }
+
+  return res.status(200).json(result);
+}
+async function addSponsor(req, res, next) {
+  const { title, url, imageUrl, addressUrl, address, phone, email, workDays } =
+    req.body;
+
+  const credential = {
+    title,
+    url,
+    email,
+    imageUrl,
+    addressUrl,
+    address,
+    phone,
+    workDays,
+  };
+  const result = await Sponsors.create(credential);
+  console.log(result);
+  if (!result) {
+    return res.status(401).json({ message: "news not found" });
+  }
+
+  return res.status(200).json(result);
+}
+async function addNew(req, res, next) {
+  const { title, url, description, date } = req.body;
+
+  const credential = { title, url, description, date };
+  const result = await News.create(credential);
+  console.log(result);
+  if (!result) {
+    return res.status(401).json({ message: "news not found" });
+  }
+
+  return res.status(200).json(result);
+}
 async function aboutUser(req, res, next) {
   try {
     const { email } = req.body;
@@ -11,7 +64,6 @@ async function aboutUser(req, res, next) {
     return res.status(500).json({ message: error.message });
   }
 }
-
 async function aboutUserPets(req, res, next) {
   try {
     return res.status(200).json({
@@ -28,17 +80,6 @@ async function servicesSidebar(req, res, next) {
     return res.status(200).json({
       user: {
         email: "servicesSidebar",
-      },
-    });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-}
-async function news(req, res, next) {
-  try {
-    return res.status(200).json({
-      user: {
-        email: "news",
       },
     });
   } catch (error) {
@@ -105,6 +146,9 @@ module.exports = {
   aboutUser,
   aboutUserPets,
   servicesSidebar,
+  addSponsor,
+  addNew,
+  sponsors,
   news,
   noticesByTitle,
   noticesByCategory,

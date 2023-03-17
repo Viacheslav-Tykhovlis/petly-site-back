@@ -3,13 +3,15 @@ const {
   aboutUser,
   aboutUserPets,
   servicesSidebar,
-  news,
+  addSponsor,
   noticesByTitle,
   noticesByCategory,
   addNotices,
   deleteNoticesByID,
   addNoticesSelected,
-  // notices,
+  addNew,
+  sponsors,
+  news
   // noticesSelected,
 } = require("../../controllers/notices/noticesControlers");
 // const { authMiddleware } = require("../../middlewares/authMiddleware");
@@ -21,6 +23,9 @@ const servicesRouter = express.Router();
 // 2. створити ендпоінт для отримання новин(захаркодить перелік новин в базу данних)
 servicesRouter.get("/servicessidebar", servicesSidebar);
 servicesRouter.get("/news", news);
+servicesRouter.get("/sponsors", sponsors);
+servicesRouter.post("/new", addNew);
+servicesRouter.post("/sponsor", addSponsor);
 
 // 3. створити ендпоінт для пошуку оголошеннь по заголовку
 // 5. створити ендпоінт для отримання одного оголошення
