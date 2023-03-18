@@ -24,11 +24,10 @@ const servicesRouter = express.Router();
 // 1. створити ендпоінт для отримання контактної інформації про сервіси які надають послуги(захаркодить перелік новин в базу данних)
 // 2. створити ендпоінт для отримання новин(захаркодить перелік новин в базу данних)
 servicesRouter.get("/servicessidebar", authMiddleware, servicesSidebar);
-servicesRouter.get("/news", authMiddleware, news);
+servicesRouter.get("/news", news);
 servicesRouter.get("/sponsors", authMiddleware, sponsors);
 servicesRouter.post("/new", authMiddleware, addNew);
 servicesRouter.post("/sponsor", authMiddleware, addSponsor);
-
 
 servicesRouter.post(
   "/",
