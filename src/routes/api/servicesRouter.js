@@ -12,9 +12,11 @@ const {
   addNew,
   sponsors,
   news,
+  petRegister,
   // noticesSelected,
 } = require("../../controllers/notices/noticesControlers");
 const { authMiddleware } = require("../../middlewares/authMiddleware");
+const { uploadCloud } = require("../../middlewares/uploadCloud");
 
 const servicesRouter = express.Router();
 // servicesRouter.use(authMiddleware);
@@ -26,6 +28,14 @@ servicesRouter.get("/news", authMiddleware, news);
 servicesRouter.get("/sponsors", authMiddleware, sponsors);
 servicesRouter.post("/new", authMiddleware, addNew);
 servicesRouter.post("/sponsor", authMiddleware, addSponsor);
+
+
+servicesRouter.post(
+  "/",
+  authMiddleware,
+  uploadCloud.single("image"),
+  petRegister
+);
 
 // 3. створити ендпоінт для пошуку оголошеннь по заголовку
 // 5. створити ендпоінт для отримання одного оголошення
