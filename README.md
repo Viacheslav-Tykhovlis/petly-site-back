@@ -2,11 +2,11 @@
 
 ---
 
-#### :link:**_Final team5 project "Kapu$ta":moneybag: - backend_**
+#### :link:**_Final project "Petly project":moneybag: - backend_**
 
 ---
 
-Pet-project - back-end part of the application "Kapu$ta". This application is for keeping records of expenses and income of the user with the ability to receive general and detailed reports for a certain period.
+Pet-project - back-end part of the application "Petly project". This application is for .
 
 ---
 
