@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { User } = require("../schemas/");
+const { User } = require("../schemas/user");
 const { ACCESS_SECRET_KEY } = process.env;
 
 const authMiddleware = async (req, res, next) => {
