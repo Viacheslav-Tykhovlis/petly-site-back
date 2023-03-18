@@ -3,7 +3,7 @@ const { authSchema } = require("../../schemas/joi");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
-const { refreshSchema } = require("../../schemas/joi");
+// const { refreshSchema } = require("../../schemas/joi");
 const sendEmail = require("../../services/sendEmail");
 
 const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
@@ -91,33 +91,32 @@ async function login(req, res, next) {
 
 const refresh = async (req, res, next) => {
   try {
-    const { refreshToken: token } = req.body;
-    const { REFRESH_SECRET_KEY, ACCESS_SECRET_KEY } = process.env;
-    const { error } = refreshSchema.validate(req.body);
+    // const { refreshToken: token } = req.body;
+    // const { REFRESH_SECRET_KEY, ACCESS_SECRET_KEY } = process.env;
+    // const { error } = refreshSchema.validate(req.body);
 
-    if (error) {
-      return res.status(403).json({ message: "Wrong token" });
-    }
-    const { id } = jwt.verify(token, REFRESH_SECRET_KEY);
-    const isExist = await User.findOne({ refreshToken: token });
-    if (!isExist) {
-      return res.status(403).json({ message: "Token is not valid" });
-    }
+    // if (error) {
+    //   return res.status(403).json({ message: "Wrong token" });
+    // }
+    // const { id } = jwt.verify(token, REFRESH_SECRET_KEY);
+    // const isExist = await User.findOne({ refreshToken: token });
+    // if (!isExist) {
+    //   return res.status(403).json({ message: "Token is not valid" });
+    // }
 
-    const payload = {
-      id,
-    };
+    // const payload = {
+    //   id,
+    // };
 
-    const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, {
-      expiresIn: "2m",
-    });
-    const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
-      expiresIn: "7d",
-    });
+    // const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, {
+    //   expiresIn: "2m",
+    // });
+    // const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
+    //   expiresIn: "7d",
+    // });
 
     return res.status(200).json({
-      accessToken,
-      refreshToken,
+      ok: true,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
