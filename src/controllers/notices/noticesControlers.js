@@ -142,6 +142,31 @@ async function addNoticesSelected(req, res, next) {
   }
 }
 
+async function petRegister(req, res, next) {
+  // const owner = req.user.id;
+  // const petData = req.body;
+  // const data = !!req.file
+  //   ? { avatarURL: req.file.path, owner, ...petData }
+  //   : { owner, ...petData };
+  // Pet.create(data)
+  //   .then((pet) => {
+  //     if (pet) {
+  //       User.findByIdAndUpdate(owner, { $push: { userPets: pet._id } })
+  //         .then((user) => {
+  //           if (user) {
+  //             res.status(201).json({ success: true, pet });
+  //           }
+  //         })
+  //         .catch((err) => {
+  //           throw new Error(err);
+  //         });
+  //     }
+  //   })
+  //   .catch((err) =>
+  //     res.status(400).json({ success: false, error: err, message: err.message })
+  //   );
+}
+
 module.exports = {
   aboutUser,
   aboutUserPets,
@@ -155,4 +180,5 @@ module.exports = {
   addNotices,
   deleteNoticesByID,
   addNoticesSelected,
+  petRegister,
 };
