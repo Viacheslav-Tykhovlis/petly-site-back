@@ -3,20 +3,24 @@
   "info": {
     "version": "0.0.1",
     "title": "Petly API 1.0",
-    "description": "back-end API for [Petly](https://petly-site-back.up.railway.app)",
+    "description": "back-end API for [Our finaly project ](https://viacheslav-tykhovlis.github.io/petly-site)",
     "contact": {
       "email": "Petly@petly.click"
     }
   },
   "servers": [
     {
-      "url": "https://viacheslav-tykhovlis.github.io/petly-site"
+      "url": "https://petly-site-back.up.railway.app"
     }
   ],
   "tags": [
     {
       "name": "Auth",
       "description": "Authorization endpoints"
+    },
+    {
+      "name": "Basic",
+      "description": "basic endpoints"
     },
     {
       "name": "noties",
@@ -233,130 +237,6 @@
         }
       }
     },
-    "/auth/users/verify/{verificationToken}": {
-      "get": {
-        "tags": ["Auth"],
-        "summary": "Verification token",
-        "parameters": [
-          {
-            "name": "verificationToken",
-            "in": "path",
-            "description": "Verification Token string",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "200",
-                  "type": "object",
-                  "example": {
-                    "message": "Verification successful"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "404",
-                  "type": "object",
-                  "example": {
-                    "message": "User not found"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/auth/users/resend": {
-      "post": {
-        "tags": ["Auth"],
-        "summary": "Resend email for verification token",
-        "parameters": [],
-        "security": [],
-        "requestBody": {
-          "description": "Resend email object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": ["email"],
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "description": "User's email",
-                    "format": "email"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK \"Successful operation\"",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "200",
-                  "type": "object",
-                  "example": {
-                    "message": "Verification email sended"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request (one of the \"message\")",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "400",
-                  "type": "object",
-                  "example": [
-                    {
-                      "message": "missing required field email"
-                    },
-                    {
-                      "message": "Verification has been already passed"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "500",
-                  "type": "object",
-                  "example": {
-                    "message": "error description"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/auth/users/logout": {
       "get": {
         "tags": ["Auth"],
@@ -389,209 +269,15 @@
         }
       }
     },
-    "/auth/users/current": {
+    "/servicessidebar": {
       "get": {
-        "tags": ["Auth"],
-        "summary": "User current",
-        "parameters": [],
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK \"Successful operation\"",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "200",
-                  "type": "object",
-                  "properties": {
-                    "user": {
-                      "type": "object",
-                      "description": "description",
-                      "example": {
-                        "email": "userEmail"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "500",
-                  "type": "object",
-                  "example": {
-                    "message": "error description"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/auth/users/refresh": {
-      "post": {
-        "tags": ["Auth"],
-        "summary": "User refresh token",
-        "parameters": [],
-        "security": [],
-        "requestBody": {
-          "description": "Registration's object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": ["refreshToken"],
-                "properties": {
-                  "refreshToken": {
-                    "type": "string",
-                    "format": "token"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK \"Successful operation\"",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "200",
-                  "type": "object",
-                  "example": {
-                    "accessToken": "token",
-                    "refreshToken": "token"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden (one of the \"message\")",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "403",
-                  "type": "object",
-                  "example": [
-                    {
-                      "message": "Wrong token"
-                    },
-                    {
-                      "message": "Token is not valid"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "500",
-                  "type": "object",
-                  "example": {
-                    "message": "error description"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/auth/users/google": {
-      "get": {
-        "tags": ["Auth"],
-        "summary": "Google Auth",
-        "parameters": [],
-        "security": [],
-        "responses": {
-          "308": {
-            "description": "Permanent Redirect (to oauth2.googleapis.com)",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/auth/users/google-redirect": {
-      "get": {
-        "tags": ["Auth"],
-        "summary": "Google Redirect",
-        "parameters": [],
-        "security": [],
-        "responses": {
-          "308": {
-            "description": "Permanent Redirect (to FRONTEND_URL)",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/api/new": {
-      "get": {
-        "tags": ["noties"],
-        "summary": "Get new",
-        "parameters": [],
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK \"Successful operation\"",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "200",
-                  "type": "object",
-                  "example": {
-                    "balance": 100000
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "401",
-                  "type": "object",
-                  "example": {
-                    "message": "User not found"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/sponsor": {
-      "get": {
-        "tags": ["noties"],
-        "summary": "Get sponsor",
+        "tags": ["Basic"],
+        "summary": "Get services provided",
         "parameters": [
           {
             "name": "type",
             "in": "query",
-            "description": "All sponsor",
+            "description": "Information about the services provided",
             "required": true,
             "schema": {
               "type": "string"
@@ -626,238 +312,19 @@
         }
       }
     },
-    "/api/addImage": {
-      "post": {
-        "tags": ["noties"],
-        "summary": "Add img",
-        "parameters": [],
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "requestBody": {
-          "description": "User object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AboutuserPets"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK \"Successful operation\"",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AboutuserPets"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "400",
-                  "type": "object",
-                  "example": {
-                    "message": "missing fields"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "500",
-                  "type": "object",
-                  "example": {
-                    "message": "error description"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/noticesByTitle": {
-      "post": {
-        "tags": ["noties"],
-        "summary": "Add income transaction",
-        "parameters": [],
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "requestBody": {
-          "description": "Transaction's object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AboutuserPets"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK \"Successful operation\"",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AboutuserPets"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "400",
-                  "type": "object",
-                  "example": {
-                    "message": "missing fields"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "500",
-                  "type": "object",
-                  "example": {
-                    "message": "error description"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/notices": {
-      "post": {
-        "tags": ["noties"],
-        "summary": "Add notices",
-        "parameters": [],
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AboutuserPets"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "500",
-                  "type": "object",
-                  "example": {
-                    "message": "error description"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/noticesId": {
-      "delete": {
-        "tags": ["noties"],
-        "summary": "Delete noties",
+    "/news": {
+      "get": {
+        "tags": ["Basic"],
+        "summary": "Get news",
         "parameters": [
           {
-            "name": "month",
+            "name": "type",
             "in": "query",
-            "description": "DeletById",
+            "description": "The latest news in the animal world",
             "required": true,
             "schema": {
-              "type": "integer",
-              "example": 3
+              "type": "string"
             }
-          }
-        ],
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AboutuserPets"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "500",
-                  "type": "object",
-                  "example": {
-                    "message": "error description"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/notices_selected": {
-      "post": {
-        "tags": ["noties"],
-        "summary": "Add notices_selected",
-        "parameters": [
-          {
-            "name": "notices_selected",
-            "in": "query",
-            "description": "noties",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "example": 6
-            }
-          }
-        ],
-        "security": [
-          {
-            "Bearer": []
           }
         ],
         "responses": {
@@ -866,21 +333,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "200",
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "object",
-                      "description": "description",
-                      "example": {
-                        "year": 2023,
-                        "month": 3
-                      }
-                    },
-                    "totalAmount": {
-                      "example": 30000
-                    }
-                  }
+                  "$ref": "#/components/schemas/AboutuserPets"
                 }
               }
             }
@@ -902,14 +355,19 @@
         }
       }
     },
-    "/auth/users/aboutUser": {
+    "/user/about": {
       "get": {
-        "tags": ["Auth"],
-        "summary": "Get all about user",
-        "parameters": [],
-        "security": [
+        "tags": ["Basic"],
+        "summary": "Get personal information about the user",
+        "parameters": [
           {
-            "Bearer": []
+            "name": "type",
+            "in": "query",
+            "description": "All spersonal information about the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -942,20 +400,189 @@
     },
     "/user/aboutuserPets": {
       "get": {
-        "tags": ["noties"],
-        "summary": "Get all aboutuserPets",
+        "tags": ["Basic"],
+        "summary": "Get all information about the user's animals",
         "parameters": [
           {
-            "name": "month",
+            "name": "type",
             "in": "query",
-            "description": "All about user pets",
+            "description": "information about the user's animals, from the pets collection",
             "required": true,
-            "schema": {}
+            "schema": {
+              "type": "string"
+            }
           }
         ],
-        "security": [
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/noticesByTitle": {
+      "get": {
+        "tags": ["noties"],
+        "summary": "Searching noties by title",
+        "parameters": [
           {
-            "Bearer": []
+            "name": "type",
+            "in": "query",
+            "description": "An endpoint for searching ads by title collection",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/noticesByCategory": {
+      "get": {
+        "tags": ["noties"],
+        "summary": "Receiving noties by category",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Endpoint for receiving ads by category collection",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notices": {
+      "get": {
+        "tags": ["noties"],
+        "summary": "Adding noties to the selected category",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Adding ads according to the selected category",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/noticesId": {
+      "delete": {
+        "tags": ["noties"],
+        "summary": "deleting noties of an authorized user",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "An endpoint for deleting an authorized user's ad created by the same user collection",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
