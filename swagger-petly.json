@@ -1,0 +1,1026 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "0.0.1",
+    "title": "Petly API 1.0",
+    "description": "back-end API for [Petly](https://petly-site-back.up.railway.app)",
+    "contact": {
+      "email": "Petly@petly.click"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://viacheslav-tykhovlis.github.io/petly-site"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "noties",
+      "description": "Noties endpoints"
+    }
+  ],
+  "paths": {
+    "/auth/users/signup": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "parameters": [],
+        "security": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignupAndLoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created \"Successful operation\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "201",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "description",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "description",
+                      "example": 201
+                    },
+                    "user": {
+                      "type": "object",
+                      "description": "description",
+                      "example": {
+                        "email": "userEmail"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "400",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "description",
+                      "example": "Invalid value of email or password"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "409",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "description",
+                      "example": "Email in use"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/users/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+        "parameters": [],
+        "security": [],
+        "requestBody": {
+          "description": "Login object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignupAndLoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "200",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "description",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "description",
+                      "example": 200
+                    },
+                    "accessToken": {
+                      "type": "string",
+                      "description": "description",
+                      "example": "token"
+                    },
+                    "refreshToken": {
+                      "type": "string",
+                      "description": "description",
+                      "example": "token"
+                    },
+                    "user": {
+                      "type": "object",
+                      "description": "description",
+                      "example": {
+                        "email": "userEmail"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request \"validate error\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "400",
+                  "type": "object",
+                  "example": {
+                    "message": "Wrong email or password"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (one of the \"message\")",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "401",
+                  "type": "object",
+                  "example": [
+                    {
+                      "message": "Email or password is wrong"
+                    },
+                    {
+                      "message": "Your Email is not verifyied!"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/users/verify/{verificationToken}": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Verification token",
+        "parameters": [
+          {
+            "name": "verificationToken",
+            "in": "path",
+            "description": "Verification Token string",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "200",
+                  "type": "object",
+                  "example": {
+                    "message": "Verification successful"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "404",
+                  "type": "object",
+                  "example": {
+                    "message": "User not found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/users/resend": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Resend email for verification token",
+        "parameters": [],
+        "security": [],
+        "requestBody": {
+          "description": "Resend email object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "User's email",
+                    "format": "email"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "200",
+                  "type": "object",
+                  "example": {
+                    "message": "Verification email sended"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (one of the \"message\")",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "400",
+                  "type": "object",
+                  "example": [
+                    {
+                      "message": "missing required field email"
+                    },
+                    {
+                      "message": "Verification has been already passed"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/users/logout": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content \"Successful operation\"",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/users/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "User current",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "200",
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "description": "description",
+                      "example": {
+                        "email": "userEmail"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/users/refresh": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User refresh token",
+        "parameters": [],
+        "security": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["refreshToken"],
+                "properties": {
+                  "refreshToken": {
+                    "type": "string",
+                    "format": "token"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "200",
+                  "type": "object",
+                  "example": {
+                    "accessToken": "token",
+                    "refreshToken": "token"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (one of the \"message\")",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "403",
+                  "type": "object",
+                  "example": [
+                    {
+                      "message": "Wrong token"
+                    },
+                    {
+                      "message": "Token is not valid"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/users/google": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Google Auth",
+        "parameters": [],
+        "security": [],
+        "responses": {
+          "308": {
+            "description": "Permanent Redirect (to oauth2.googleapis.com)",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/auth/users/google-redirect": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Google Redirect",
+        "parameters": [],
+        "security": [],
+        "responses": {
+          "308": {
+            "description": "Permanent Redirect (to FRONTEND_URL)",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/new": {
+      "get": {
+        "tags": ["noties"],
+        "summary": "Get new",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "200",
+                  "type": "object",
+                  "example": {
+                    "balance": 100000
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "401",
+                  "type": "object",
+                  "example": {
+                    "message": "User not found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sponsor": {
+      "get": {
+        "tags": ["noties"],
+        "summary": "Get sponsor",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "All sponsor",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/addImage": {
+      "post": {
+        "tags": ["noties"],
+        "summary": "Add img",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "description": "User object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AboutuserPets"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "400",
+                  "type": "object",
+                  "example": {
+                    "message": "missing fields"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/noticesByTitle": {
+      "post": {
+        "tags": ["noties"],
+        "summary": "Add income transaction",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "description": "Transaction's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AboutuserPets"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "400",
+                  "type": "object",
+                  "example": {
+                    "message": "missing fields"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/notices": {
+      "post": {
+        "tags": ["noties"],
+        "summary": "Add notices",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/noticesId": {
+      "delete": {
+        "tags": ["noties"],
+        "summary": "Delete noties",
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "description": "DeletById",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 3
+            }
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/notices_selected": {
+      "post": {
+        "tags": ["noties"],
+        "summary": "Add notices_selected",
+        "parameters": [
+          {
+            "name": "notices_selected",
+            "in": "query",
+            "description": "noties",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 6
+            }
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "200",
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "object",
+                      "description": "description",
+                      "example": {
+                        "year": 2023,
+                        "month": 3
+                      }
+                    },
+                    "totalAmount": {
+                      "example": 30000
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/users/aboutUser": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get all about user",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/aboutuserPets": {
+      "get": {
+        "tags": ["noties"],
+        "summary": "Get all aboutuserPets",
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "description": "All about user pets",
+            "required": true,
+            "schema": {}
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AboutuserPets": {
+        "type": "object",
+        "required": ["title"],
+        "properties": {
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "SignupAndLoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

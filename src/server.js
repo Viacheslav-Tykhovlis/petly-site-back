@@ -5,14 +5,13 @@ const app = require("./app");
 
 mongoose.set("strictQuery", false);
 
-// const { MONGODB_HOST_URI } = process.env;
+
+const { MONGODB_HOST_URI } = process.env;
 const PORT = process.env.PORT || 8080;
 
 async function main() {
   try {
-    await mongoose.connect(
-      "mongodb+srv://admin:vTAoAaxp0Obq9P8E@petly.hofegc9.mongodb.net/?retryWrites=true&w=majority"
-    );
+    await mongoose.connect(MONGODB_HOST_URI);
     console.log("Database connection successful");
     app.listen(PORT, (err) => {
       if (err) {

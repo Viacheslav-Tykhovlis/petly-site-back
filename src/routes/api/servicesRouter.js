@@ -30,7 +30,7 @@ servicesRouter.post("/new", authMiddleware, addNew);
 servicesRouter.post("/sponsor", authMiddleware, addSponsor);
 
 servicesRouter.post(
-  "/",
+  "/addImage",
   authMiddleware,
   uploadCloud.single("image"),
   petRegister
@@ -47,7 +47,7 @@ servicesRouter.post(
 // 11. створити ендпоінт для видалення оголошення авторизованого користувача створеного цим же користувачем
 
 servicesRouter.get("/noticesByTitle", authMiddleware, noticesByTitle);
-servicesRouter.get("/notices", authMiddleware, noticesByCategory);
+servicesRouter.get("/noticesByCategory", authMiddleware, noticesByCategory);
 servicesRouter.post("/notices", authMiddleware, addNotices);
 servicesRouter.delete("/:noticesId", authMiddleware, deleteNoticesByID);
 servicesRouter.post("/notices_selected", authMiddleware, addNoticesSelected);
