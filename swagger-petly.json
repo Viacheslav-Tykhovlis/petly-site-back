@@ -3,14 +3,14 @@
   "info": {
     "version": "0.0.1",
     "title": "Petly API 1.0",
-    "description": "back-end API for [Petly](https://petly-site-back.up.railway.app)",
+    "description": "back-end API for [Our finaly project ](https://viacheslav-tykhovlis.github.io/petly-site)",
     "contact": {
       "email": "Petly@petly.click"
     }
   },
   "servers": [
     {
-      "url": "https://viacheslav-tykhovlis.github.io/petly-site"
+      "url": "https://petly-site-back.up.railway.app"
     }
   ],
   "tags": [
@@ -19,7 +19,7 @@
       "description": "Authorization endpoints"
     },
     {
-      "basic": "basic",
+      "name": "Basic",
       "description": "basic endpoints"
     },
     {
