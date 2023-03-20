@@ -1,42 +1,3 @@
-async function news(req, res, next) {
-  return res.status(200).json();
-}
-
-async function aboutUser(req, res, next) {
-  try {
-    const { email } = req.body;
-    return res.status(200).json({
-      user: {
-        email,
-        router: "aboutUser",
-      },
-    });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-}
-async function aboutUserPets(req, res, next) {
-  try {
-    return res.status(200).json({
-      user: {
-        email: "aboutUserPets",
-      },
-    });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-}
-async function servicesSidebar(req, res, next) {
-  try {
-    return res.status(200).json({
-      user: {
-        email: "servicesSidebar",
-      },
-    });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-}
 async function noticesByTitle(req, res, next) {
   try {
     return res.status(200).json({
@@ -119,10 +80,6 @@ async function petRegister(req, res, next) {
 }
 
 module.exports = {
-  aboutUser,
-  aboutUserPets,
-  servicesSidebar,
-  news,
   noticesByTitle,
   noticesByCategory,
   addNotices,

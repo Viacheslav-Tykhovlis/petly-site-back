@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 
-const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
+const { ACCESS_SECRET_KEY } = process.env;
 
 async function signup(req, res, next) {
   try {
@@ -20,7 +20,7 @@ async function signup(req, res, next) {
       return;
     }
 
-    const salt = await bcrypt.genSalt();
+    const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     const verificationToken = uuidv4();
 
@@ -28,7 +28,7 @@ async function signup(req, res, next) {
       email,
       password: hashedPassword,
       verificationToken,
-      verify: true,
+      // verify: true,
     });
     return res.status(201).json({
       status: "success",
@@ -42,7 +42,7 @@ async function signup(req, res, next) {
   }
 }
 
-async function signin(req, res, next) {
+async function login(req, res, next) {
   try {
     const { email, password } = req.body;
     const { error } = authSchema.validate(req.body);
@@ -56,29 +56,26 @@ async function signin(req, res, next) {
       return res.status(401).json({ message: "Email or password is wrong" });
     }
 
-    if (!user.verify) {
-      return res.status(401).json({ message: "Your Email is not verifyied!" });
-    }
-
     const payload = {
       id: user._id,
     };
+
     const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, {
       expiresIn: "24h",
     });
-    const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
-      expiresIn: "7d",
-    });
+    // const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
+    //   expiresIn: "7d",
+    // });
 
-    await User.findByIdAndUpdate(user._id, { accessToken, refreshToken });
+    // await User.findByIdAndUpdate(user._id, { accessToken, refreshToken });
+    await User.findByIdAndUpdate(user._id, { accessToken });
 
     return res.status(200).json({
       status: "success",
       code: 200,
-      accessToken: accessToken,
-      refreshToken: refreshToken,
-      user: {
-        email: user.email,
+      // refreshToken: refreshToken,
+      data: {
+        accessToken,
       },
     });
   } catch (error) {
@@ -91,7 +88,7 @@ async function logout(req, res, next) {
     const { _id } = req.user;
     await User.findByIdAndUpdate(_id, {
       accessToken: null,
-      refreshToken: null,
+      // refreshToken: null,
     });
     return res.status(204).json(); // "Logout was successfull"
   } catch (error) {
@@ -101,6 +98,6 @@ async function logout(req, res, next) {
 
 module.exports = {
   signup,
-  signin,
+  login,
   logout,
 };

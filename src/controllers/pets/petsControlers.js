@@ -31,6 +31,7 @@ async function addPet(req, res, next) {
 
   return res.status(200).json(result);
 }
+
 const removeById = async (req, res) => {
   const { petId } = req.params;
 
