@@ -5,7 +5,6 @@ const cors = require("cors");
 const servicesRouter = require("./routes/basic/servicesRouter");
 const authRouter = require("./routes/auth/authRouter");
 const noticesRouter = require("./routes/notices/noticesRouter");
-const petsRouter = require("./routes/pets/petsRouter");
 
 const app = express();
 
@@ -18,7 +17,6 @@ app.use(express.json());
 app.use("/", servicesRouter);
 app.use("/auth", authRouter);
 app.use("/notices", noticesRouter);
-app.use("/pet", petsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
