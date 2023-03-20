@@ -19,7 +19,9 @@
       "description": "Authorization endpoints"
     },
     {
+
       "name": "Basic",
+
       "description": "basic endpoints"
     },
     {
@@ -269,6 +271,7 @@
         }
       }
     },
+
     "/servicessidebar": {
       "get": {
         "tags": ["Basic"],
@@ -574,11 +577,14 @@
       "delete": {
         "tags": ["noties"],
         "summary": "deleting noties of an authorized user",
+
         "parameters": [
           {
             "name": "type",
             "in": "query",
+
             "description": "An endpoint for deleting an authorized user's ad created by the same user collection",
+
             "required": true,
             "schema": {
               "type": "string"

@@ -1,7 +1,6 @@
 const express = require("express");
 const {
   signup,
-  // refresh,
   signin,
   logout,
 } = require("../../controllers/auth/authControlers");
@@ -13,7 +12,7 @@ const authRouter = express.Router();
 authRouter.post("/signup", signup);
 
 // створити ендпоінт логінізації користувача
-authRouter.post("/login", signin);
+authRouter.post("/signin", signin);
 
 // створити ендпоінт для оновлення данних користувача або одного з полів контактної інформації про користувача
 
