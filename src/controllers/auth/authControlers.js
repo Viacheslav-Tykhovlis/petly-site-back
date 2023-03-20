@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 const { refreshSchema } = require("../../schemas/joi");
-const sendEmail = require("../../services/sendEmail");
+// const sendEmail = require("../../services/sendEmail");
 
 const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
 
@@ -38,6 +38,8 @@ async function signup(req, res, next) {
       code: 201,
       user: {
         email: newUser.email,
+        verificationToken,
+        password: hashedPassword,
       },
     });
   } catch (error) {
@@ -59,9 +61,9 @@ async function login(req, res, next) {
       return res.status(401).json({ message: "Email or password is wrong" });
     }
 
-    if (!user.verify) {
-      return res.status(401).json({ message: "Your Email is not verifyied!" });
-    }
+    // if (!user.verify) {
+    //   return res.status(401).json({ message: "Your Email is not verifyied!" });
+    // }
 
     const payload = {
       id: user._id,
@@ -137,67 +139,67 @@ async function logout(req, res, next) {
   }
 }
 
-async function current(req, res, next) {
-  try {
-    const { email } = req.user;
-    return res.status(200).json({
-      user: {
-        email,
-      },
-    });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-}
+// async function current(req, res, next) {
+//   try {
+//     const { email } = req.user;
+//     return res.status(200).json({
+//       user: {
+//         email,
+//       },
+//     });
+//   } catch (error) {
+//     return res.status(500).json({ message: error.message });
+//   }
+// }
 
-async function resendEmail(req, res, next) {
-  try {
-    const { email } = req.body;
-    const verificationToken = uuidv4();
-    const user = await User.findOne({ email });
+// async function resendEmail(req, res, next) {
+//   try {
+//     const { email } = req.body;
+//     const verificationToken = uuidv4();
+//     const user = await User.findOne({ email });
 
-    if (!user) {
-      return res.status(400).json({ message: "missing required field email" });
-    }
+//     if (!user) {
+//       return res.status(400).json({ message: "missing required field email" });
+//     }
 
-    if (user.verify) {
-      return res
-        .status(400)
-        .json({ message: "Verification has been already passed" });
-    }
+//     if (user.verify) {
+//       return res
+//         .status(400)
+//         .json({ message: "Verification has been already passed" });
+//     }
 
-    await User.findByIdAndUpdate(user._id, {
-      verificationToken,
-    });
+//     await User.findByIdAndUpdate(user._id, {
+//       verificationToken,
+//     });
 
-    await sendEmail(email, verificationToken);
-    return res.status(200).json({ message: "Verification email sended" });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-}
+//     // await sendEmail(email, verificationToken);
+//     return res.status(200).json({ message: "Verification email sended" });
+//   } catch (error) {
+//     return res.status(500).json({ message: error.message });
+//   }
+// }
 
-async function verifyEmail(req, res) {
-  const { verificationToken } = req.params;
+// async function verifyEmail(req, res) {
+//   const { verificationToken } = req.params;
 
-  const user = await User.findOne({ verificationToken });
+//   const user = await User.findOne({ verificationToken });
 
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
+//   if (!user) {
+//     return res.status(404).json({ message: "User not found" });
+//   }
 
-  await User.findByIdAndUpdate(user._id, {
-    verificationToken: null,
-    verify: true,
-  });
-  return res.status(200).json({ message: "Verification successful" });
-}
+//   await User.findByIdAndUpdate(user._id, {
+//     verificationToken: null,
+//     verify: true,
+//   });
+//   return res.status(200).json({ message: "Verification successful" });
+// }
 
 module.exports = {
-  current,
+  // current,
   signup,
-  verifyEmail,
-  resendEmail,
+  // verifyEmail,
+  // resendEmail,
   refresh,
   login,
   logout,
