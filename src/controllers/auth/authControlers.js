@@ -1,5 +1,5 @@
 const { User } = require("../../schemas/user");
-const { authSchema } = require("../../schemas/joi");
+const { authSchema } = require("../../helpers/");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
@@ -56,9 +56,9 @@ async function signin(req, res, next) {
       return res.status(401).json({ message: "Email or password is wrong" });
     }
 
-    // if (!user.verify) {
-    //   return res.status(401).json({ message: "Your Email is not verifyied!" });
-    // }
+    if (!user.verify) {
+      return res.status(401).json({ message: "Your Email is not verifyied!" });
+    }
 
     const payload = {
       id: user._id,
