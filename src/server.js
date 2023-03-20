@@ -5,8 +5,9 @@ const app = require("./app");
 
 mongoose.set("strictQuery", false);
 
+
 const { MONGODB_HOST_URI } = process.env;
-const { PORT } = process.env;
+const PORT = process.env.PORT || 8080;
 
 async function main() {
   try {
