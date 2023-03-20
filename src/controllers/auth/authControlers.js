@@ -1,5 +1,5 @@
 const { User } = require("../../schemas/user");
-const { authSchema } = require("../../helpers/joi");
+const { authSchema } = require("../../helpers/");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");

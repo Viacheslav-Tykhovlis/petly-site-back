@@ -269,15 +269,316 @@
         }
       }
     },
-    "/api/sponsor": {
+    "/servicessidebar": {
       "get": {
-        "tags": ["noties"],
-        "summary": "Get sponsor",
+        "tags": ["Basic"],
+        "summary": "Get services provided",
         "parameters": [
           {
             "name": "type",
             "in": "query",
-            "description": "All sponsor",
+            "description": "Information about the services provided",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/news": {
+      "get": {
+        "tags": ["Basic"],
+        "summary": "Get news",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "The latest news in the animal world",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/about": {
+      "get": {
+        "tags": ["Basic"],
+        "summary": "Get personal information about the user",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "All spersonal information about the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/aboutuserPets": {
+      "get": {
+        "tags": ["Basic"],
+        "summary": "Get all information about the user's animals",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "information about the user's animals, from the pets collection",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/noticesByTitle": {
+      "get": {
+        "tags": ["noties"],
+        "summary": "Searching noties by title",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "An endpoint for searching ads by title collection",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/noticesByCategory": {
+      "get": {
+        "tags": ["noties"],
+        "summary": "Receiving noties by category",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Endpoint for receiving ads by category collection",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notices": {
+      "get": {
+        "tags": ["noties"],
+        "summary": "Adding noties to the selected category",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Adding ads according to the selected category",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutuserPets"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/noticesId": {
+      "delete": {
+        "tags": ["noties"],
+        "summary": "deleting noties of an authorized user",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "An endpoint for deleting an authorized user's ad created by the same user collection",
             "required": true,
             "schema": {
               "type": "string"
