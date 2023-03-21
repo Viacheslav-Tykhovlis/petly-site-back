@@ -1,23 +1,12 @@
 const express = require("express");
-const {
-  signup,
-  login,
-  logout,
-} = require("../../controllers/auth/authControlers");
+const { userController } = require("../../controllers");
 const { authMiddleware } = require("../../middlewares/authMiddleware");
 const { ctrlWrapper } = require("../../middlewares/ctrlWrapper");
 
 const authRouter = express.Router();
 
-// створити ендпоінтт реєстрації користувача
-authRouter.post("/signup", ctrlWrapper(signup));
-
-// створити ендпоінт логінізації користувача
-authRouter.post("/signin", ctrlWrapper(login));
-
-// створити ендпоінт для оновлення данних користувача або одного з полів контактної інформації про користувача
-
-// створити ендпоінт для логаута користувача
-authRouter.get("/logout", authMiddleware, ctrlWrapper(logout));
+authRouter.post("/signup", ctrlWrapper(userController.signup));
+authRouter.post("/signin", ctrlWrapper(userController.login));
+authRouter.get("/logout", authMiddleware, ctrlWrapper(userController.logout));
 
 module.exports = authRouter;
