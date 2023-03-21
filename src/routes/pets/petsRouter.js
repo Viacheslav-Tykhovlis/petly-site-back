@@ -1,4 +1,5 @@
 const express = require("express");
+const { uploadCloud } = require("../../middlewares/uploadCloud");
 
 const {
   getAll,
@@ -15,7 +16,7 @@ const petsRouter = express.Router();
 petsRouter.get("/", ctrlWrapper(getAll));
 
 // створити ендпоінт для додавання карточки тварини користувача
-petsRouter.post("/pet", ctrlWrapper(addPet));
+petsRouter.post("/pet", uploadCloud.single("image"), ctrlWrapper(addPet));
 
 // створити ендпоінт для видалення карточки з твариною користувача
 petsRouter.delete("/:petId", ctrlWrapper(removeById));
