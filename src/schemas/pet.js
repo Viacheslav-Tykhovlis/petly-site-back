@@ -7,47 +7,38 @@ const petSchema = Schema(
     name: {
       type: String,
       required: [true, "Set name for pet"],
+      min: 2,
+      max: 16,
     },
     birthday: {
-      type: String,
+      type: Date,
+      required: [true, "Set in the format: dd-mm-yyyy"],
+      trim: true,
     },
     breed: {
       type: String,
+      required: true,
+      min: 2,
+      max: 16,
     },
-    // place: {
-    //   type: String,
-    //   required: [true, "Set location for pet"],
-    // },
-    // theSex: {
-    //   type: String,
-    //   required: [true, "Set gender for pet"],
-    // },
-    // email: {
-    //   type: String,
-    //   unique: [true, "You already have contact with this email"],
-    // },
-    // phone: {
-    //   type: String,
-    //   required: [true, "You already have contact with this contact"],
-    // },
-    // price: {
-    //   type: Number,
-    //   required: true,
-    //   min: 0.01,
-    // },
+    photo: {
+      type: Schema.Types.ObjectId,
+      ref: "Image",
+    },
+    comments: {
+      type: String,
+      min: 8,
+      max: 120,
+    },
   },
   { versionKey: false, timestamps: true }
 );
 
 const joiSchema = Joi.object({
-  name: Joi.string().required(),
-  // birthday: Joi.string(),
-  // breed: Joi.string(),
-  // place: Joi.string().required(),
-  // theSex: Joi.string().required(),
-  // phone: Joi.string().min(10).max(14).required(),
-  // email: Joi.string().email().required(),
-  // price: Joi.number().min(0.01).required(),
+  name: Joi.string().min(2).max(16).required(),
+  birthday: Joi.date().required(),
+  breed: Joi.string().min(2).max(16).required(),
+  comments: Joi.string().min(8).max(120).required(),
 });
 
 const Pet = model("pet", petSchema);
