@@ -1,24 +1,44 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
 const schema = mongoose.Schema(
   {
-    password: {
+    name: {
       type: String,
-      required: [true, "Password is required"],
+      default: "",
     },
     email: {
       type: String,
       required: [true, "Email is required"],
       unique: true,
     },
+    password: {
+      type: String,
+      required: [true, "password is required"],
+    },
+    Birthday: {
+      type: Number,
+      default: null,
+    },
+    Phone: {
+      type: Number,
+      default: null,
+    },
+    City: {
+      type: String,
+      default: "",
+    },
+    avatarUrl: {
+      type: String,
+      default: "",
+    },
     accessToken: {
       type: String,
       default: null,
     },
-    // refreshToken: {
-    //   type: String,
-    //   default: null,
-    // },
+    userLikePets: [{ type: Schema.Types.ObjectId, ref: "userLikePets" }],
+    userOwnerPets: [{ type: Schema.Types.ObjectId, ref: "userOwnerPets" }],
+    userAddPet: [{ type: Schema.Types.ObjectId, ref: "userAddPet" }],
   },
   { versionKey: false, timestamps: true }
 );
