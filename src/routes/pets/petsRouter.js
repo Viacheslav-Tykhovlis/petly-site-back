@@ -1,7 +1,7 @@
 const express = require("express");
 const { uploadCloud } = require("../../middlewares/uploadCloud");
 
-const { login } = require("../../controllers/auth/authControlers");
+const { authMiddleware } = require("../../middlewares/authMiddleware");
 
 const { addPet, removeById } = require("../../controllers/pets");
 
@@ -14,9 +14,14 @@ const petsRouter = express.Router();
 
 // створити ендпоінт для додавання карточки тварини користувача
 
-petsRouter.post("/pet", ctrlWrapper(login), ctrlWrapper(addPet));
+petsRouter.post(
+  "/pet",
+  ctrlWrapper(authMiddleware),
+  uploadCloud.single("image"),
+  ctrlWrapper(addPet)
+);
 
-petsRouter.post("/pet", uploadCloud.single("image"), ctrlWrapper(addPet));
+// petsRouter.post("/pet", uploadCloud.single("image"), ctrlWrapper(addPet));
 
 // створити ендпоінт для видалення карточки з твариною користувача
 petsRouter.delete("/:petId", validation(joiSchema), ctrlWrapper(removeById));
