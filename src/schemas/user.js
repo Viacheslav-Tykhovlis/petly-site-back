@@ -3,34 +3,34 @@ const { Schema } = mongoose;
 
 const schema = mongoose.Schema(
   {
-    avatarUrl: {
-      type: Number,
-      default: '',
-    },
     name: {
       type: String,
-      required: [true, "name is required"],
+      default: "",
     },
     email: {
       type: String,
       required: [true, "Email is required"],
       unique: true,
     },
-    Birthday: {
-      type: Number,
-      required: [true, "Birthday is required"],
-    },
-    Phone: {
-      type: Number,
-      required: [true, "Phone is required"],
-    },
-    City: {
-      type: String,
-      required: [true, "City is required"],
-    },
     password: {
       type: String,
       required: [true, "password is required"],
+    },
+    Birthday: {
+      type: Number,
+      default: null,
+    },
+    Phone: {
+      type: Number,
+      default: null,
+    },
+    City: {
+      type: String,
+      default: "",
+    },
+    avatarUrl: {
+      type: String,
+      default: "",
     },
     accessToken: {
       type: String,
