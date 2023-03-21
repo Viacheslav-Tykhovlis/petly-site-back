@@ -1,23 +1,20 @@
 const express = require("express");
 
-const {
-  getAll,
-  addPet,
-  removeById,
-} = require("../../controllers/pets/petsControlers");
-// const { validation } = require("../../middlewares/validation");
+const { login } = require("../../controllers/auth/authControlers");
+
+const { addPet, removeById } = require("../../controllers/pets");
+
 const { ctrlWrapper } = require("../../middlewares/ctrlWrapper");
+const { validation } = require("../../middlewares/validation");
+
+const { joiSchema } = require("../../schemas/pet");
 
 const petsRouter = express.Router();
 
-// const { joiSchema } = require("../../schemas/pet");
-
-petsRouter.get("/", ctrlWrapper(getAll));
-
 // створити ендпоінт для додавання карточки тварини користувача
-petsRouter.post("/pet", ctrlWrapper(addPet));
+petsRouter.post("/pet", ctrlWrapper(login), ctrlWrapper(addPet));
 
 // створити ендпоінт для видалення карточки з твариною користувача
-petsRouter.delete("/:petId", ctrlWrapper(removeById));
+petsRouter.delete("/:petId", validation(joiSchema), ctrlWrapper(removeById));
 
 module.exports = petsRouter;
