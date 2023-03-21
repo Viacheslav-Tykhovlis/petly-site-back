@@ -28,13 +28,13 @@ async function signup(req, res, next) {
       email,
       password: hashedPassword,
       verificationToken,
-      // verify: true,
     });
     return res.status(201).json({
       status: "success",
       code: 201,
       user: {
         email: newUser.email,
+        password,
       },
     });
   } catch (error) {
@@ -63,17 +63,11 @@ async function login(req, res, next) {
     const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, {
       expiresIn: "24h",
     });
-    // const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
-    //   expiresIn: "7d",
-    // });
-
-    // await User.findByIdAndUpdate(user._id, { accessToken, refreshToken });
     await User.findByIdAndUpdate(user._id, { accessToken });
 
     return res.status(200).json({
       status: "success",
       code: 200,
-      // refreshToken: refreshToken,
       data: {
         accessToken,
       },
@@ -88,9 +82,8 @@ async function logout(req, res, next) {
     const { _id } = req.user;
     await User.findByIdAndUpdate(_id, {
       accessToken: null,
-      // refreshToken: null,
     });
-    return res.status(204).json(); // "Logout was successfull"
+    return res.status(204).json();
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
