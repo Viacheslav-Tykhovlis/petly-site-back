@@ -26,7 +26,108 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SignupAndLoginRequest"
+                "$ref": "#/components/schemas/Auth"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created \"Successful operation\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "201",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "description",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "description",
+                      "example": 201
+                    },
+                    "user": {
+                      "type": "object",
+                      "description": "description",
+                      "example": {
+                        "email": "userEmail"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "400",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "description",
+                      "example": "Invalid value of email or password"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "409",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "description",
+                      "example": "Email in use"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/change": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User change",
+        "parameters": [],
+        "security": [],
+        "requestBody": {
+          "description": "change's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
               }
             }
           }
@@ -127,7 +228,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SignupAndLoginRequest"
+                "$ref": "#/components/schemas/Auth"
               }
             }
           }
@@ -222,38 +323,6 @@
       "get": {
         "tags": ["Auth"],
         "summary": "User logout",
-        "parameters": [],
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content \"Successful operation\"",
-            "content": {}
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "500",
-                  "type": "object",
-                  "example": {
-                    "message": "error description"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/auth/change": {
-      "post": {
-        "tags": ["Auth"],
-        "summary": "User change",
         "parameters": [],
         "security": [
           {
@@ -788,7 +857,7 @@
           }
         }
       },
-      "SignupAndLoginRequest": {
+      "User": {
         "type": "object",
         "required": ["email", "password"],
         "properties": {
@@ -853,6 +922,22 @@
                 }
               }
             }
+          }
+        }
+      },
+      "Auth": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
           }
         }
       }
