@@ -1,40 +1,18 @@
 const { Notice } = require("../../schemas/notices");
 
 const createNotice = async (req, res, next) => {
+  // поменять соответствующие поля на это
   // const { _id } = req.user;
+  // или
+  // const owner = req.user.id;
   const { id } = req.params;
+  const notice = req.body;
 
-  const {
-    category,
-    title,
-    name,
-    birthdate,
-    breed,
-    sex,
-    location,
-    comments,
-    price,
-    image,
-    favorite,
-  } = req.body;
+  const newNotice = !!req.file
+    ? { image: req.file.path, owner: id, ...notice }
+    : { owner: id, ...notice };
 
   try {
-    const newNotice = {
-      category,
-      title,
-      name,
-      birthdate,
-      breed,
-      sex,
-      location,
-      comments,
-      price,
-      image,
-      favorite,
-      owner: id,
-      // owner: _id,
-    };
-
     const result = new Notice(newNotice);
     await result.save();
 
@@ -50,3 +28,33 @@ const createNotice = async (req, res, next) => {
 };
 
 module.exports = { createNotice };
+
+// const {
+//   category,
+//   title,
+//   name,
+//   birthdate,
+//   breed,
+//   sex,
+//   location,
+//   comments,
+//   price,
+//   // image,
+//   favorite,
+// } = req.body;
+
+// const newNotice = {
+//   category,
+//   title,
+//   name,
+//   birthdate,
+//   breed,
+//   sex,
+//   location,
+//   comments,
+//   price,
+//   image: req.file.path,
+//   favorite,
+//   owner: id,
+//   // owner: _id,
+// };

@@ -22,7 +22,7 @@ const noticeSchema = Schema(
       type: String,
     },
     sex: {
-      enum: ["male", "female"],
+      type: Array,
     },
     location: {
       type: String,
@@ -37,8 +37,7 @@ const noticeSchema = Schema(
       type: String,
     },
     favorite: {
-      type: Boolean,
-      default: false,
+      type: Array,
     },
     owner: {
       type: Schema.Types.ObjectId,
