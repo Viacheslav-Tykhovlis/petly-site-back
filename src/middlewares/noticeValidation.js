@@ -16,7 +16,7 @@ const noticeValidation = (req, res, next) => {
     comments: Joi.string(),
     price: Joi.number().min(0.01).required(),
     image: Joi.string(),
-    favorite: Joi.boolean(),
+    favorite: Joi.string(),
     comments: Joi.string().min(2).max(24).pattern(new RegExp("[^0-9]")),
   });
 

@@ -2,14 +2,24 @@ const { Notice } = require("../../schemas/notices");
 
 const noticeByTitle = async (req, res, next) => {
   const { title } = req.params;
-  const { page = 1, limit = 20 } = req.query;
-  const skip = (page - 1) * limit;
+
+  // const { page = 1, limit = 20 } = req.query;
+  // const skip = (page - 1) * limit;
+
+  // , "", {
+  //     skip,
+  //     limit: Number(limit),
+  //   }
+
+  const pattern = title;
 
   try {
-    const result = await Notice.find({ title: title }, "", {
-      skip,
-      limit: Number(limit),
-    }).populate("owner", "_id name email phone");
+    const result = await Notice.find(
+      {
+        title: { $regex: pattern, $options: "i" },
+      },
+      { name: 0, sex: 0, comments: 0, createdAt: 0, updatedAt: 0, owner: 0 }
+    );
 
     if (!result.length) {
       return res.status(404).json({

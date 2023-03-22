@@ -8,7 +8,11 @@ const {
   noticeById,
   noticeByTitle,
   noticesByCategory,
+  noticeDeleteById,
+  noticesByOwner,
 } = require("../../controllers/notices");
+
+const { uploadCloud } = require("../../middlewares/uploadCloud");
 
 const noticesRouter = express.Router();
 
@@ -32,13 +36,20 @@ noticesRouter.get("/noticeId/:noticeId", noticeById);
 
 // створити ендпоінт для додавання оголошень відповідно до обраної категорії
 //  ***************  authMiddleware - вставить в роут, как будет готово ****************
-// и убрать /:id, в контроллере заменить {id} = req.params на {id} = req.user и ниже по коду тоже
-noticesRouter.post("/create/:id", noticeValidation, createNotice);
+//  в контроллере заменить {id} = req.params на {_id} = req.user и ниже по коду тоже
+noticesRouter.post(
+  "/create/:id",
+  uploadCloud.single("image"),
+  noticeValidation,
+  createNotice
+);
 
 // створити ендпоінт для отримання оголошень авторизованого кристувача створених цим же користувачем
-// ? get own, auth middleware
+//  ***************  authMiddleware - вставить в роут, как будет готово ****************
+noticesRouter.get("/userNotices/:userId", noticesByOwner);
 
 // створити ендпоінт для видалення оголошення авторизованого користувача створеного цим же користувачем
-// ? delete own, auth middleware
+//  ***************  authMiddleware - вставить в роут, как будет готово ****************
+noticesRouter.delete("/delete/:noticeId", noticeDeleteById);
 
 module.exports = noticesRouter;

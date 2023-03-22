@@ -1,17 +1,14 @@
 const { Notice } = require("../../schemas/notices");
 
-const noticeById = async (req, res, next) => {
+const noticeDeleteById = async (req, res, next) => {
   const { noticeId } = req.params;
 
   try {
-    const result = await Notice.findById(noticeId).populate(
-      "owner",
-      "_id name email phone"
-    );
+    const result = await Notice.findByIdAndDelete({ _id: noticeId });
 
     if (result) {
       return res.json({
-        message: "notice by id",
+        message: `notice by id: '${noticeId}' deleted`,
         code: 200,
         data: result,
       });
@@ -27,4 +24,4 @@ const noticeById = async (req, res, next) => {
   }
 };
 
-module.exports = { noticeById };
+module.exports = { noticeDeleteById };

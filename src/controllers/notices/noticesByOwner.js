@@ -1,30 +1,28 @@
 const { Notice } = require("../../schemas/notices");
 
-const noticesByCategory = async (req, res, next) => {
-  const { category } = req.params;
-  // const { page = 1, limit = 20 } = req.query;
-  // const skip = (page - 1) * limit;
+const noticesByOwner = async (req, res, next) => {
+  // поменять соответствующие поля на это
+  // const { _id } = req.user;
+  //  const result = await Notice.findById({ owner: _id });
 
-  // , "", {
-  //     skip,
-  //     limit: Number(limit),
-  //   }
+  const { userId } = req.params;
+  console.log(userId);
 
   try {
     const result = await Notice.find(
-      { category: category },
+      { owner: userId },
       { name: 0, sex: 0, comments: 0, createdAt: 0, updatedAt: 0, owner: 0 }
     );
-    // .populate("owner", "_id name email phone");
 
     if (!result.length) {
       return res.status(404).json({
-        message: "no data found",
+        message: "this user has no contacts",
         code: 404,
       });
     }
+
     return res.status(200).json({
-      message: "list of notices by category",
+      message: "user notices",
       code: 200,
       data: result,
     });
@@ -34,4 +32,4 @@ const noticesByCategory = async (req, res, next) => {
   }
 };
 
-module.exports = { noticesByCategory };
+module.exports = { noticesByOwner };
