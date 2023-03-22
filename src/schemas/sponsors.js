@@ -1,6 +1,9 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, ObjectId } = require("mongoose");
 
 const schemaSponsors = new Schema({
+  _id: {
+    type: ObjectId,
+  },
   title: {
     type: String,
   },
