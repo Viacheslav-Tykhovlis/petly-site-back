@@ -13,24 +13,8 @@
       "url": "https://petly-site-back.up.railway.app"
     }
   ],
-  "tags": [
-    {
-      "name": "Auth",
-      "description": "Authorization endpoints"
-    },
-    {
-
-      "name": "Basic",
-
-      "description": "basic endpoints"
-    },
-    {
-      "name": "noties",
-      "description": "Noties endpoints"
-    }
-  ],
   "paths": {
-    "/auth/users/signup": {
+    "/auth/signup": {
       "post": {
         "tags": ["Auth"],
         "summary": "User registration",
@@ -131,7 +115,7 @@
         }
       }
     },
-    "/auth/users/login": {
+    "/auth/login": {
       "post": {
         "tags": ["Auth"],
         "summary": "User login",
@@ -168,11 +152,6 @@
                       "example": 200
                     },
                     "accessToken": {
-                      "type": "string",
-                      "description": "description",
-                      "example": "token"
-                    },
-                    "refreshToken": {
                       "type": "string",
                       "description": "description",
                       "example": "token"
@@ -239,7 +218,7 @@
         }
       }
     },
-    "/auth/users/logout": {
+    "/auth/logout": {
       "get": {
         "tags": ["Auth"],
         "summary": "User logout",
@@ -271,10 +250,41 @@
         }
       }
     },
-
+    "/auth/change": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User change",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content \"Successful operation\"",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/servicessidebar": {
       "get": {
-        "tags": ["Basic"],
+        "tags": ["services"],
         "summary": "Get services provided",
         "parameters": [
           {
@@ -293,7 +303,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AboutuserPets"
+                  "$ref": "#/components/schemas/petSchema"
                 }
               }
             }
@@ -317,7 +327,7 @@
     },
     "/news": {
       "get": {
-        "tags": ["Basic"],
+        "tags": ["services"],
         "summary": "Get news",
         "parameters": [
           {
@@ -336,7 +346,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AboutuserPets"
+                  "$ref": "#/components/schemas/petSchema"
                 }
               }
             }
@@ -360,7 +370,7 @@
     },
     "/user/about": {
       "get": {
-        "tags": ["Basic"],
+        "tags": ["user"],
         "summary": "Get personal information about the user",
         "parameters": [
           {
@@ -379,7 +389,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AboutuserPets"
+                  "$ref": "#/components/schemas/petSchema"
                 }
               }
             }
@@ -403,7 +413,7 @@
     },
     "/user/aboutuserPets": {
       "get": {
-        "tags": ["Basic"],
+        "tags": ["user"],
         "summary": "Get all information about the user's animals",
         "parameters": [
           {
@@ -422,7 +432,136 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AboutuserPets"
+                  "$ref": "#/components/schemas/petSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": ["pets"],
+        "summary": "getting all cards with the user's animals",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "An endpoint for getting all cards with the user's animals",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/petSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pet": {
+      "get": {
+        "tags": ["pets"],
+        "summary": "adding a user animal card",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "An endpoint for adding a user animal card",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/petSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "500",
+                  "type": "object",
+                  "example": {
+                    "message": "error description"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/:petId": {
+      "delete": {
+        "tags": ["pets"],
+        "summary": "deleting the card with the user's animal",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "An endpoint deleting the card with the user's animal",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\" (array of objects)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/petSchema"
                 }
               }
             }
@@ -446,7 +585,7 @@
     },
     "/noticesByTitle": {
       "get": {
-        "tags": ["noties"],
+        "tags": ["notices"],
         "summary": "Searching noties by title",
         "parameters": [
           {
@@ -465,7 +604,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AboutuserPets"
+                  "$ref": "#/components/schemas/petSchema"
                 }
               }
             }
@@ -489,7 +628,7 @@
     },
     "/noticesByCategory": {
       "get": {
-        "tags": ["noties"],
+        "tags": ["notices"],
         "summary": "Receiving noties by category",
         "parameters": [
           {
@@ -508,7 +647,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AboutuserPets"
+                  "$ref": "#/components/schemas/petSchema"
                 }
               }
             }
@@ -532,7 +671,7 @@
     },
     "/notices": {
       "get": {
-        "tags": ["noties"],
+        "tags": ["notices"],
         "summary": "Adding noties to the selected category",
         "parameters": [
           {
@@ -551,7 +690,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AboutuserPets"
+                  "$ref": "#/components/schemas/petSchema"
                 }
               }
             }
@@ -573,18 +712,15 @@
         }
       }
     },
-    "/noticesId": {
+    "/:noticesId": {
       "delete": {
-        "tags": ["noties"],
+        "tags": ["notices"],
         "summary": "deleting noties of an authorized user",
-
         "parameters": [
           {
             "name": "type",
             "in": "query",
-
             "description": "An endpoint for deleting an authorized user's ad created by the same user collection",
-
             "required": true,
             "schema": {
               "type": "string"
@@ -597,7 +733,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AboutuserPets"
+                  "$ref": "#/components/schemas/petSchema"
                 }
               }
             }
@@ -622,12 +758,33 @@
   },
   "components": {
     "schemas": {
-      "AboutuserPets": {
+      "petSchema": {
         "type": "object",
-        "required": ["title"],
+        "required": ["name", "phone", "theSex", "place"],
         "properties": {
-          "title": {
+          "name": {
             "type": "string"
+          },
+          "birthday": {
+            "type": "string"
+          },
+          "breed": {
+            "type": "string"
+          },
+          "place": {
+            "type": "string"
+          },
+          "theSex": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
           }
         }
       },
@@ -635,6 +792,10 @@
         "type": "object",
         "required": ["email", "password"],
         "properties": {
+          "name": {
+            "type": "string",
+            "example": "puh"
+          },
           "email": {
             "type": "string",
             "description": "User's email",
@@ -644,6 +805,54 @@
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
+          },
+          "Birthday": {
+            "type": "number"
+          },
+          "Phone": {
+            "type": "number"
+          },
+          "City": {
+            "type": "string"
+          },
+          "avatarUrl": {
+            "type": "string"
+          },
+          "accessToken": {
+            "type": "string"
+          },
+          "userLikePets": {
+            "items": {
+              "type": "object",
+              "properties": {
+                "pet_id": {
+                  "type": "string",
+                  "example": "6419a948e7def16fccb72eb4"
+                }
+              }
+            }
+          },
+          "userOwnerPets": {
+            "items": {
+              "type": "object",
+              "properties": {
+                "pet_id": {
+                  "type": "string",
+                  "example": "6419a948e7def16fccb72eb4"
+                }
+              }
+            }
+          },
+          "userAddPet": {
+            "items": {
+              "type": "object",
+              "properties": {
+                "pete_id": {
+                  "type": "string",
+                  "example": "6419a948e7def16fccb72eb4"
+                }
+              }
+            }
           }
         }
       }
