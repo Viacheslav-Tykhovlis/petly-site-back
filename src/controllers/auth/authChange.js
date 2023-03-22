@@ -1,29 +1,23 @@
 const { User } = require("../../schemas/user");
+const jwt = require("jsonwebtoken");
 
 async function authChange(req, res, next) {
-  const owner = req.user._id;
-  const { Phone, Birthday, name, avatarUrl, City } = req.body;
-  console.log(owner);
+  const { REFRESH_SECRET_KEY } = process.env;
+  console.log(REFRESH_SECRET_KEY);
+
+  const { refreshToken: token } = req.body;
+
+   const { id } = jwt.verify(token, REFRESH_SECRET_KEY);
+  const oldBody = await User.findOne({ _id: id });
+
+  console.log(oldBody);
   try {
-    const newUserawait = User.findByIdAndUpdate(owner, {
-      Phone,
-      Birthday,
-      name,
-      avatarUrl,
-      City,
+
+    return res.status(201).json({
+      status: "success",
+      code: 201,
+      oldBody,
     });
-    console.log(newUserawait);
-    //   // const newUser = await User.create({
-    //   //   Phone,
-    //   //   Birthday,
-    //   //   name,
-    //   //   avatarUrl,
-    //   //   City,
-    //   // });
-      return res.status(201).json({
-        status: "success",
-        code: 201,
-      });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
