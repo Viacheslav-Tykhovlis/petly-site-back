@@ -1,54 +1,21 @@
-// const { User } = require("../../schemas/user");
-// const { authSchema } = require("../../schemas/joi");
-// const bcrypt = require("bcrypt");
-// const { v4: uuidv4 } = require("uuid");
+const { User } = require("../../schemas/user");
 
 async function authChange(req, res, next) {
   try {
-//     const { email, password, Phone, Birthday, name, avatarUrl, City } =
-//       req.body;
-//     const { error } = authSchema.validate(req.body);
+    const credentials = req.body;
+    const { accessToken } = req.user;
+    console.log(accessToken);
 
-//     if (error) {
-//       console.log(error);
-//       res.status(400).json({ message: "Invalid value of email or password" });
-//       return;
-//     }
-//     const userCheck = await User.findOne({ email });
-//     if (userCheck) {
-//       res.status(409).json({ message: "Email in use" });
-//       return;
-//     }
+    const oldUser = await User.findOne({accessToken});
 
-//     const salt = await bcrypt.genSalt(10);
-//     const hashedPassword = await bcrypt.hash(password, salt);
-//     const verificationToken = uuidv4();
-
-//     const newUser = await User.create({
-//       email,
-//       password: hashedPassword,
-//       Phone,
-//       Birthday,
-//       name,
-//       avatarUrl,
-//       City,
-//       verificationToken,
-//     });
-    // return res.status(201).json({
-    //   status: "success",
-    //   code: 201,
-    //   user: {
-    //     email: newUser.email,
-    //     password,
-    //     Phone,
-    //     Birthday,
-    //     name,
-    //     avatarUrl,
-    //     City,
-    //   },
-        return res.status(201).json({
-          status: "authChange success",
-        });
+    const newUser = await User.create({
+      ...credentials,
+      ...oldUser,
+    });
+    return res.status(201).json({
+      status: "authChange success",
+      newUser,
+    });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

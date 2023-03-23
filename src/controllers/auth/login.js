@@ -32,8 +32,9 @@ async function login(req, res, next) {
     return res.status(200).json({
       status: "success",
       code: 200,
-      data: {
-        accessToken,
+      accessToken,
+      user: {
+        email,
       },
     });
   } catch (error) {
