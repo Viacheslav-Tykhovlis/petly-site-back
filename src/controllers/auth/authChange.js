@@ -3,17 +3,21 @@ const { User } = require("../../schemas/user");
 async function authChange(req, res, next) {
   try {
     const credentials = req.body;
-    const { email } = req.user;
+    const { _id: contactId } = req.user;
 
-    const oldUser = await User.findOne({ email });
+      const { name, Birthday, Phone, City, avatarUrl, email } =
+        await User.findByIdAndUpdate(contactId, credentials, {
+          new: true,
+        });
 
-    const newUser = await User.create({
-      ...credentials,
-      ...oldUser,
-    });
     return res.status(201).json({
       status: "update secessful",
-      newUser,
+      name,
+      Birthday,
+      Phone,
+      City,
+      avatarUrl,
+      email,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });

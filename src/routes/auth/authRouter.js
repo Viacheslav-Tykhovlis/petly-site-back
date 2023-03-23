@@ -7,7 +7,7 @@ const authRouter = express.Router();
 
 authRouter.post("/signup", ctrlWrapper(userController.signup));
 authRouter.post("/login", ctrlWrapper(userController.login));
-authRouter.post(
+authRouter.patch(
   "/change",
   authMiddleware,
   ctrlWrapper(userController.authChange)
