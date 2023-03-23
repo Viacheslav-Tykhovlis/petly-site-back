@@ -1,16 +1,11 @@
 const { User } = require("../../schemas/user");
 
-async function authChange(req, res, next) {
+async function aboutUser(req, res, next) {
   try {
-    const credentials = req.body;
     const { email } = req.user;
 
-    const oldUser = await User.findOne({ email });
+    const newUser = await User.findOne({ email });
 
-    const newUser = await User.create({
-      ...credentials,
-      ...oldUser,
-    });
     return res.status(201).json({
       status: "update secessful",
       newUser,
@@ -20,4 +15,4 @@ async function authChange(req, res, next) {
   }
 }
 
-module.exports = authChange;
+module.exports = aboutUser;
