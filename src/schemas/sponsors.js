@@ -27,8 +27,8 @@ const schemaSponsors = new Schema({
   },
   workDays: [
     {
-      type: {
-        type: Boolean,
+      _id: {
+        type: ObjectId,
       },
       from: {
         type: String,
@@ -36,6 +36,7 @@ const schemaSponsors = new Schema({
       to: {
         type: String,
       },
+      isOpen: { type: Boolean },
     },
   ],
 });
