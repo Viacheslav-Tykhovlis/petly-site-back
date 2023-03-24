@@ -22,8 +22,9 @@ const petSchema = Schema(
       max: 16,
     },
     photo: {
-      type: Schema.Types.ObjectId,
-      ref: "Image",
+      type: String,
+      // type: Schema.Types.ObjectId,
+      // ref: "Image",
     },
     comments: {
       type: String,
