@@ -30,6 +30,11 @@ const petSchema = Schema(
       min: 8,
       max: 120,
     },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
   },
   { versionKey: false, timestamps: true }
 );
