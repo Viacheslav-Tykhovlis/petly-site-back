@@ -9,12 +9,6 @@ const { ctrlWrapper } = require("../../middlewares/ctrlWrapper");
 // - інформації про тварин корисувача, з коллекції pets.
 // userRouter.get("/user/about", authMiddleware, aboutUser);
 
-
-
-userRouter.get(
-  "/aboutUser",
-  authMiddleware,
-  ctrlWrapper(userController.aboutUser)
-);
+userRouter.get("/about", authMiddleware, ctrlWrapper(userController.aboutUser));
 
 module.exports = userRouter;
