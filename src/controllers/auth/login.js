@@ -21,7 +21,7 @@ async function login(req, res, next) {
     if (!user) {
       return res
         .status(401)
-        .json({ message: "such a user does not exist, please register" });
+        .json({ message: "user does not exist, please register" });
     }
 
     const userPassword = await bcrypt.compare(password, user.password);
