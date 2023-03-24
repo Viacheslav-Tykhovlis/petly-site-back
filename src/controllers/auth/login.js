@@ -11,11 +11,22 @@ async function login(req, res, next) {
     const { error } = authSchema.validate(req.body);
 
     if (error) {
-      return res.status(400).json({ message: "Wrong email or password" });
+      return res
+        .status(400)
+        .json({ message: "validate error, wrong email or password" });
     }
 
     const user = await User.findOne({ email });
+
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: "such a user does not exist, please register" });
+    }
+
     const userPassword = await bcrypt.compare(password, user.password);
+  
+
     if (!user || !userPassword) {
       return res.status(401).json({ message: "Email or password is wrong" });
     }
@@ -32,7 +43,9 @@ async function login(req, res, next) {
     return res.status(200).json({
       status: "success",
       code: 200,
-      accessToken,
+      data: {
+        accessToken,
+      },
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
