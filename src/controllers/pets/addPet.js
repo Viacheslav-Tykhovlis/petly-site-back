@@ -11,7 +11,7 @@ const addPet = async (req, res) => {
   Pet.create(data)
     .then((pet) => {
       if (pet) {
-        User.findByIdAndUpdate(owner, { $push: { userPets: pet._id } })
+        User.findByIdAndUpdate(owner, { $push: { userAddPet: pet._id } })
           .then((user) => {
             if (user) {
               res.status(201).json({ success: true, pet });
