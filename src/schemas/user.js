@@ -20,11 +20,11 @@ const schema = mongoose.Schema(
       type: Number,
       default: null,
     },
-    Phone: {
+    tel: {
       type: Number,
       default: null,
     },
-    City: {
+    region: {
       type: String,
       default: "",
     },

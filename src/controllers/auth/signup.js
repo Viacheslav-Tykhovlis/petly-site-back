@@ -1,19 +1,18 @@
 const { User } = require("../../schemas/user");
-const { authSchema } = require("../../schemas/joi");
+// const { authSchema } = require("../../schemas/joi");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 
 async function signup(req, res, next) {
   try {
-    const { email, password, Phone, Birthday, name, avatarUrl, City } =
-      req.body;
-    const { error } = authSchema.validate(req.body);
+    const { email, password, name, region, tel } = req.body;
+    // const { error } = authSchema.validate(req.body);
 
-    if (error) {
-      console.log(error);
-      res.status(400).json({ message: "Invalid value of email or password" });
-      return;
-    }
+    // if (error) {
+    //   console.log(error);
+    //   res.status(400).json({ message: "Invalid value of email or password" });
+    //   return;
+    // }
     const userCheck = await User.findOne({ email });
     if (userCheck) {
       res.status(409).json({ message: "Email in use" });
@@ -27,11 +26,9 @@ async function signup(req, res, next) {
     const newUser = await User.create({
       email,
       password: hashedPassword,
-      Phone,
-      Birthday,
+      tel,
       name,
-      avatarUrl,
-      City,
+      region,
       verificationToken,
     });
     return res.status(201).json({
@@ -39,12 +36,6 @@ async function signup(req, res, next) {
       code: 201,
       user: {
         email: newUser.email,
-        password,
-        Phone,
-        Birthday,
-        name,
-        avatarUrl,
-        City,
       },
     });
   } catch (error) {
@@ -53,4 +44,3 @@ async function signup(req, res, next) {
 }
 
 module.exports = signup;
-

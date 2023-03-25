@@ -3,7 +3,7 @@ const { uploadCloud } = require("../../middlewares/uploadCloud");
 
 const { authMiddleware } = require("../../middlewares/authMiddleware");
 
-const { addPet, removeById } = require("../../controllers/pets");
+const { addPet, removeById, getUserPets } = require("../../controllers/pets");
 
 const { ctrlWrapper } = require("../../middlewares/ctrlWrapper");
 const { validation } = require("../../middlewares/validation");
@@ -25,5 +25,10 @@ petsRouter.post(
 
 // створити ендпоінт для видалення карточки з твариною користувача
 petsRouter.delete("/:petId", validation(joiSchema), ctrlWrapper(removeById));
+petsRouter.get(
+  "/allUserPets",
+  ctrlWrapper(authMiddleware),
+  ctrlWrapper(getUserPets)
+);
 
 module.exports = petsRouter;
