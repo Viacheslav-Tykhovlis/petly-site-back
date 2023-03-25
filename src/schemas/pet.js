@@ -22,13 +22,19 @@ const petSchema = Schema(
       max: 16,
     },
     photo: {
-      type: Schema.Types.ObjectId,
-      ref: "Image",
+      type: String,
+      // type: Schema.Types.ObjectId,
+      // ref: "Image",
     },
     comments: {
       type: String,
       min: 8,
       max: 120,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
     },
   },
   { versionKey: false, timestamps: true }

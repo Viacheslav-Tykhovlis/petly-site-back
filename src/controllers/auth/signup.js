@@ -1,7 +1,6 @@
 const { User } = require("../../schemas/user");
 // const { authSchema } = require("../../schemas/joi");
 const bcrypt = require("bcrypt");
-const { v4: uuidv4 } = require("uuid");
 
 async function signup(req, res, next) {
   try {
@@ -19,9 +18,10 @@ async function signup(req, res, next) {
       return;
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    const verificationToken = uuidv4();
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
 
     const newUser = await User.create({
       email,
@@ -41,6 +41,7 @@ async function signup(req, res, next) {
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
+
 }
 
 module.exports = signup;

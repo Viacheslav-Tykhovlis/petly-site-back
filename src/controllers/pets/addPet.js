@@ -1,22 +1,30 @@
 const { Pet } = require("../../schemas/pet");
+const { User } = require("../../schemas/user");
 
-async function addPet(req, res, next) {
-  const { name, birthday, breed, photo, comments } = req.body;
+const addPet = async (req, res) => {
+  const owner = req.user.id;
+  const petData = req.body;
+  const data = !req.file
+    ? { photo: req.file.path, owner, ...petData }
+    : { owner, ...petData };
 
-  const credential = {
-    name,
-    birthday,
-    breed,
-    photo,
-    comments,
-  };
-  const result = await Pet.create(credential);
-  console.log(result);
-  if (!result) {
-    return res.status(401).json({ message: "pet not found" });
-  }
-
-  return res.status(200).json(result);
-}
+  Pet.create(data)
+    .then((pet) => {
+      if (pet) {
+        User.findByIdAndUpdate(owner, { $push: { userAddPet: pet._id } })
+          .then((user) => {
+            if (user) {
+              res.status(201).json({ success: true, pet });
+            }
+          })
+          .catch((err) => {
+            throw new Error(err);
+          });
+      }
+    })
+    .catch((err) =>
+      res.status(400).json({ success: false, error: err, message: err.message })
+    );
+};
 
 module.exports = addPet;

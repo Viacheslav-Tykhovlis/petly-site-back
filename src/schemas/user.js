@@ -16,8 +16,8 @@ const schema = mongoose.Schema(
       type: String,
       required: [true, "password is required"],
     },
-    Birthday: {
-      type: Number,
+    birthday: {
+      type: Date,
       default: null,
     },
     tel: {
@@ -37,7 +37,6 @@ const schema = mongoose.Schema(
       default: null,
     },
     userLikePets: [{ type: Schema.Types.ObjectId, ref: "userLikePets" }],
-    userOwnerPets: [{ type: Schema.Types.ObjectId, ref: "userOwnerPets" }],
     userAddPet: [{ type: Schema.Types.ObjectId, ref: "userAddPet" }],
   },
   { versionKey: false, timestamps: true }

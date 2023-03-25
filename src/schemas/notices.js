@@ -36,9 +36,6 @@ const noticeSchema = Schema(
     image: {
       type: String,
     },
-    favorite: {
-      type: Array,
-    },
     owner: {
       type: Schema.Types.ObjectId,
       ref: "users",
