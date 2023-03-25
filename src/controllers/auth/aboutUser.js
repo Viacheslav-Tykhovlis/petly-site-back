@@ -1,6 +1,6 @@
 const { User } = require("../../schemas/user");
 
-async function aboutUser(req, res, next) {
+async function aboutUser(req, res) {
   try {
     const { email } = req.user;
 
@@ -14,6 +14,5 @@ async function aboutUser(req, res, next) {
     return res.status(500).json({ message: error.message });
   }
 }
-
 
 module.exports = aboutUser;
