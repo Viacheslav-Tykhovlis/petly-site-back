@@ -1,6 +1,6 @@
 const express = require("express");
 const userRouter = express.Router();
-const { userController } = require("../../controllers");
+const { aboutUserEndPets } = require("../../controllers/user");
 const { authMiddleware } = require("../../middlewares/authMiddleware");
 const { ctrlWrapper } = require("../../middlewares/ctrlWrapper");
 
@@ -9,6 +9,6 @@ const { ctrlWrapper } = require("../../middlewares/ctrlWrapper");
 // - інформації про тварин корисувача, з коллекції pets.
 // userRouter.get("/user/about", authMiddleware, aboutUser);
 
-userRouter.get("/about", authMiddleware, ctrlWrapper(userController.aboutUser));
+userRouter.get("/about", authMiddleware, ctrlWrapper(aboutUserEndPets));
 
 module.exports = userRouter;
