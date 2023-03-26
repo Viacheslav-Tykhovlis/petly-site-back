@@ -17,11 +17,6 @@ petsRouter.post(
 );
 
 // створити ендпоінт для видалення карточки з твариною користувача
-petsRouter.delete(
-  "/:petId",
-  ctrlWrapper(authMiddleware),
-  validation(joiSchema),
-  ctrlWrapper(removeById)
-);
+petsRouter.delete("/:petId", ctrlWrapper(removeById));
 
 module.exports = petsRouter;
