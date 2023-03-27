@@ -7,7 +7,7 @@ async function aboutUser(req, res) {
     const newUser = await User.findOne({ email });
 
     return res.status(201).json({
-      status: "update secessful",
+      status: "successful",
       newUser,
     });
   } catch (error) {
