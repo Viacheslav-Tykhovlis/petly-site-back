@@ -1,6 +1,6 @@
 const { Pet } = require("../../schemas/pet");
 
- async function aboutUserEndPets(req, res) {
+async function aboutUserEndPets(req, res) {
   const { user } = req;
 
   const userWithPet = await Pet.find(
@@ -11,7 +11,6 @@ const { Pet } = require("../../schemas/pet");
       breed: 1,
       photo: 1,
       comments: 1,
-      _id: 0,
     }
   );
 
