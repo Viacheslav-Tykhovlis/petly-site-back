@@ -1,17 +1,17 @@
 const express = require("express");
-const { userController } = require("../../controllers");
+const { authController } = require("../../controllers");
 const { authMiddleware } = require("../../middlewares/authMiddleware");
 const { ctrlWrapper } = require("../../middlewares/ctrlWrapper");
 
 const authRouter = express.Router();
 
-authRouter.post("/signup", ctrlWrapper(userController.signup));
-authRouter.post("/login", ctrlWrapper(userController.login));
+authRouter.post("/signup", ctrlWrapper(authController.signup));
+authRouter.post("/login", ctrlWrapper(authController.login));
 authRouter.patch(
   "/change",
   authMiddleware,
-  ctrlWrapper(userController.authChange)
+  ctrlWrapper(authController.authChange)
 );
-authRouter.get("/logout", authMiddleware, ctrlWrapper(userController.logout));
+authRouter.get("/logout", authMiddleware, ctrlWrapper(authController.logout));
 
 module.exports = authRouter;
