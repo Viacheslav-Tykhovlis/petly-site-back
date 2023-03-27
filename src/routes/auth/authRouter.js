@@ -11,7 +11,7 @@ authRouter.post("/login", ctrlWrapper(authController.login));
 authRouter.patch(
   "/change",
   authMiddleware,
-  uploadCloud,
+  uploadCloud.single("image"),
   ctrlWrapper(authController.authChange)
 );
 authRouter.get("/logout", authMiddleware, ctrlWrapper(authController.logout));
