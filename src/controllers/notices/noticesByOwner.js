@@ -1,18 +1,10 @@
 const { Notice } = require("../../schemas/notices");
 
 const noticesByOwner = async (req, res, next) => {
-  // поменять соответствующие поля на это
-  // const { _id } = req.user;
-  //  const result = await Notice.findById({ owner: _id });
-
   const { _id } = req.user;
-  // console.log(userId);
 
   try {
-    const result = await Notice.find(
-      { owner: _id }
-      // { name: 0, sex: 0, comments: 0, createdAt: 0, updatedAt: 0, owner: 0 }
-    );
+    const result = await Notice.find({ owner: _id });
 
     if (!result.length) {
       return res.status(404).json({
@@ -28,7 +20,6 @@ const noticesByOwner = async (req, res, next) => {
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
-    // next(error);
   }
 };
 

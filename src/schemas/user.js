@@ -37,7 +37,7 @@ const schema = mongoose.Schema(
       type: String,
       default: null,
     },
-    userLikePets: [],
+    userLikePets: [{ type: Schema.Types.ObjectId, ref: "notice" }],
     userAddPet: [{ type: Schema.Types.ObjectId, ref: "userAddPet" }],
   },
   { versionKey: false, timestamps: true }

@@ -1,10 +1,6 @@
 const { Notice } = require("../../schemas/notices");
 
 const createNotice = async (req, res, next) => {
-  // поменять соответствующие поля на это
-  // const { _id } = req.user;
-  // или
-  // const owner = req.user.id;
   const { _id } = req.user;
   const notice = req.body;
 
@@ -23,7 +19,6 @@ const createNotice = async (req, res, next) => {
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
-    // next(error);
   }
 };
 

@@ -2,15 +2,6 @@ const { Notice } = require("../../schemas/notices");
 
 const noticeByTitle = async (req, res, next) => {
   const { title } = req.params;
-
-  // const { page = 1, limit = 20 } = req.query;
-  // const skip = (page - 1) * limit;
-
-  // , "", {
-  //     skip,
-  //     limit: Number(limit),
-  //   }
-
   const pattern = title;
 
   try {
@@ -34,7 +25,6 @@ const noticeByTitle = async (req, res, next) => {
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
-    // next(error);
   }
 };
 
