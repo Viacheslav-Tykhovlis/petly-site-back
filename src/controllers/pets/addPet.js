@@ -4,9 +4,10 @@ const { User } = require("../../schemas/user");
 const addPet = async (req, res) => {
   const owner = req.user.id;
   const petData = req.body;
-  const data = !req.file
-    ? { photo: req.file.path, owner, ...petData }
-    : { owner, ...petData };
+  const data = { owner, ...petData };
+  // const data = !req.file
+  //   ? { photo: req.file.path, owner, ...petData }
+  //   : { owner, ...petData };
 
   Pet.create(data)
     .then((pet) => {
