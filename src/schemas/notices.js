@@ -38,10 +38,9 @@ const noticeSchema = Schema(
     },
     owner: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: "users",
       required: true,
     },
-    favorite: [],
   },
 
   { versionKey: false, timestamps: true }
