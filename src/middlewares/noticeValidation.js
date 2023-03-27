@@ -9,15 +9,14 @@ const noticeValidation = (req, res, next) => {
       .pattern(new RegExp("[A-Za-zА-Яа-я]"))
       .required(),
     name: Joi.string().min(2).max(16).pattern(new RegExp("[A-Za-zА-Яа-я]")),
-    birthdate: Joi.string(),
+    birthdate: Joi.date(),
     breed: Joi.string().min(2).max(24).pattern(new RegExp("[A-Za-zА-Яа-я]")),
     sex: Joi.string().valid("male", "female").required(),
     location: Joi.string().required(),
-    comments: Joi.string(),
-    price: Joi.number().min(0.01).required(),
+    price: Joi.number().min(0.01),
     image: Joi.string(),
     favorite: Joi.string(),
-    comments: Joi.string().min(2).max(24).pattern(new RegExp("[^0-9]")),
+    comments: Joi.string().min(8).max(120).pattern(new RegExp("[^0-9]")),
   });
 
   const validationResult = schema.validate(req.body);

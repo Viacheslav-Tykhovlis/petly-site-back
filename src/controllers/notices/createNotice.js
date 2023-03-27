@@ -5,12 +5,12 @@ const createNotice = async (req, res, next) => {
   // const { _id } = req.user;
   // или
   // const owner = req.user.id;
-  const { id } = req.params;
+  const { _id } = req.user;
   const notice = req.body;
 
   const newNotice = !!req.file
-    ? { image: req.file.path, owner: id, ...notice }
-    : { owner: id, ...notice };
+    ? { image: req.file.path, owner: _id, ...notice }
+    : { owner: _id, ...notice };
 
   try {
     const result = new Notice(newNotice);

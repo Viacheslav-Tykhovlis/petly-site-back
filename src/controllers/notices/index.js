@@ -4,6 +4,7 @@ const { noticeByTitle } = require("./noticeByTitle");
 const { noticesByCategory } = require("./noticesByCategory");
 const { noticeDeleteById } = require("./noticeDeleteById");
 const { noticesByOwner } = require("./noticesByOwner");
+const { addNoticeToFav } = require("./addNoticeToFav");
 
 module.exports = {
   createNotice,
@@ -12,4 +13,5 @@ module.exports = {
   noticesByCategory,
   noticeDeleteById,
   noticesByOwner,
+  addNoticeToFav,
 };

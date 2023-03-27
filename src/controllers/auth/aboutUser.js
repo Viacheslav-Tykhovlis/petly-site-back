@@ -13,7 +13,7 @@ async function aboutUser(req, res) {
     );
 
     return res.status(201).json({
-      status: "update secessful",
+      status: "successful",
       newUser,
       allUserPets,
     });

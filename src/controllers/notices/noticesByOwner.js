@@ -5,18 +5,18 @@ const noticesByOwner = async (req, res, next) => {
   // const { _id } = req.user;
   //  const result = await Notice.findById({ owner: _id });
 
-  const { userId } = req.params;
-  console.log(userId);
+  const { _id } = req.user;
+  // console.log(userId);
 
   try {
     const result = await Notice.find(
-      { owner: userId },
-      { name: 0, sex: 0, comments: 0, createdAt: 0, updatedAt: 0, owner: 0 }
+      { owner: _id }
+      // { name: 0, sex: 0, comments: 0, createdAt: 0, updatedAt: 0, owner: 0 }
     );
 
     if (!result.length) {
       return res.status(404).json({
-        message: "this user has no contacts",
+        message: "this user has no notices",
         code: 404,
       });
     }
