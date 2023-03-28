@@ -12,7 +12,7 @@ const petsRouter = express.Router();
 petsRouter.post(
   "/pet",
   ctrlWrapper(authMiddleware),
-  uploadCloud.single("image"),
+  uploadCloud.single("photo"),
   ctrlWrapper(addPet)
 );
 
