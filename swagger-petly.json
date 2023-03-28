@@ -513,7 +513,7 @@
         }
       }
     },
-    "/user/change": {
+    "/user/current": {
       "put": {
         "tags": ["user"],
         "summary": "editing user data",
@@ -853,7 +853,7 @@
     "/notices/getFavorite": {
       "get": {
         "tags": ["notices"],
-        "summary": "deleting noties of an authorized user",
+        "summary": "get noties of an authorized user",
         "security": [
           {
             "Bearer": []
