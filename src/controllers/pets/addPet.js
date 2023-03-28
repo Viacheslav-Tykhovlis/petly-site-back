@@ -5,7 +5,7 @@ const addPet = async (req, res) => {
   const owner = req.user.id;
   const petData = req.body;
   const data = !!req.file
-    ? { avatarURL: req.file.path, owner, ...petData }
+    ? { photo: req.file.path, owner, ...petData }
     : { owner, ...petData };
 
   Pet.create(data)
