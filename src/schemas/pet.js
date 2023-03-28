@@ -12,8 +12,8 @@ const petSchema = Schema(
     },
     birthday: {
       type: String,
-      required: [true, "Set in the format: dd-mm-yyyy"],
-      trim: true,
+      // required: [true, "Set in the format: dd-mm-yyyy"],
+      // trim: true,
     },
     breed: {
       type: String,
@@ -23,8 +23,6 @@ const petSchema = Schema(
     },
     photo: {
       type: String,
-      // type: Schema.Types.ObjectId,
-      // ref: "Image",
     },
     comments: {
       type: String,
