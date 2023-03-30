@@ -5,6 +5,11 @@ const authSchema = Joi.object({
   email: Joi.string().trim().email().required(),
 });
 
+const refreshSchema = Joi.object({
+  refreshToken: Joi.string().required(),
+});
+
 module.exports = {
   authSchema,
+  refreshSchema,
 };

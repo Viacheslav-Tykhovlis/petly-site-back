@@ -3,7 +3,7 @@ const { authSchema } = require("../../schemas/joi");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const { ACCESS_SECRET_KEY } = process.env;
+const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
 
 async function login(req, res) {
   const { email, password } = req.body;
@@ -36,13 +36,18 @@ async function login(req, res) {
   const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, {
     expiresIn: "24h",
   });
-  await User.findByIdAndUpdate(user._id, { accessToken });
+
+  const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
+    expiresIn: "5m",
+  });
 
   const userUpdated = await User.findOne({ email });
 
   return res.status(200).json({
     status: "success",
     code: 200,
+    refreshToken,
+    accessToken,
     data: {
       userUpdated,
       accessToken,

@@ -15,6 +15,10 @@ userRouter.get(
   authMiddleware,
   ctrlWrapper(userController.aboutUserEndPets)
 );
+userRouter.post(
+  "/refresh",
+  ctrlWrapper(userController.refresh)
+);
 
 userRouter.put(
   "/current",

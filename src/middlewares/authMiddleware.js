@@ -16,21 +16,23 @@ const authMiddleware = async (req, res, next) => {
     }
 
     const { id } = jwt.verify(token, ACCESS_SECRET_KEY);
-    if (!id) {
-      return res.status(401).json({
-        message: "Not authorized",
-        clarification: "Token not have id",
-      });
-    }
+    console.log(id);
+    // if (!id) {
+    //   return res.status(401).json({
+    //     message: "Not authorized",
+    //     clarification: "Token not have id",
+    //   });
+    // }
     const user = await User.findById(id);
-    if (!user || !user.accessToken) {
-      return res.status(401).json({ message: "Not authorized" });
-    }
+    // if (!user || !user.accessToken) {
+    //   return res.status(401).json({ message: "Not authorized" });
+    // }
 
     req.user = user;
+    console.log(user);
     next();
   } catch (error) {
-    return res.status(401).json({
+    return res.status(500).json({
       message: "Not authorized",
       clarification: "Invalid token",
       error,
