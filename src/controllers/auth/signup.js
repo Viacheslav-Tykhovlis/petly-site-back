@@ -4,10 +4,8 @@ const bcrypt = require("bcrypt");
 async function signup(req, res) {
   const { email, password, phone, birthday, name, avatarUrl, city } = req.body;
   const emailToLoWerCase = email.toLowerCase();
-  console.log(emailToLoWerCase);
 
   const userCheck = await User.findOne({ email: emailToLoWerCase });
-  console.log(userCheck);
   if (userCheck) {
     res.status(409).json({ message: "Email in use" });
     return;
@@ -15,7 +13,6 @@ async function signup(req, res) {
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
- 
 
   const newUser = await User.create({
     email: emailToLoWerCase,
