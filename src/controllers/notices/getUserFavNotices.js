@@ -2,7 +2,6 @@ const { User } = require("../../schemas/user");
 
 const getUserFavNotices = async (req, res) => {
   const { _id } = req.user;
-  console.log(_id);
 
   const favorites = await User.find({ _id }, "userLikePets").populate(
     "userLikePets",
