@@ -12,9 +12,13 @@ const addPet = async (req, res) => {
     .then((pet) => {
       if (pet) {
         User.findByIdAndUpdate(owner, { $push: { userAddPet: pet._id } })
-          .then((user) => {
+          .then(async (user) => {
             if (user) {
-              res.status(201).json({ success: true, pet });
+              const allUserPets = await Pet.find(
+                { owner: owner },
+                { name: 1, birthday: 1, breed: 1, photo: 1, comments: 1 }
+              );
+              res.status(201).json({ success: true, allUserPets });
             }
           })
           .catch((err) => {
