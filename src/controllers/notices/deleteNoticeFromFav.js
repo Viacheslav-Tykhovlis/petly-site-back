@@ -18,7 +18,6 @@ const deleteNoticeFromFav = async (req, res) => {
     updatedAt: 0,
     owner: 0,
   });
-  console.log(notice);
 
   if (!result) {
     const error = new Error(`Not found`);

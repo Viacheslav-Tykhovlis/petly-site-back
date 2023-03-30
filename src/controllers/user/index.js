@@ -1,9 +1,9 @@
 const aboutUserEndPets = require("./aboutUserEndPets");
-const updateUser = require("./updateUser");
 const refresh = require("./refresh");
+const current = require("./current");
 
 module.exports = {
   aboutUserEndPets,
-  updateUser,
   refresh,
+  current,
 };

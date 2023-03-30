@@ -1,10 +1,10 @@
 const { Pet } = require("../../schemas/pet");
 
 async function aboutUserEndPets(req, res) {
-  const { user } = req;
+    const owner = req.user.id;
 
   const userWithPet = await Pet.find(
-    { owner: user._id },
+    { owner },
     {
       name: 1,
       birthday: 1,
@@ -16,7 +16,6 @@ async function aboutUserEndPets(req, res) {
   return res.status(200).json({
     data: {
       userWithPet,
-      user,
     },
   });
 }

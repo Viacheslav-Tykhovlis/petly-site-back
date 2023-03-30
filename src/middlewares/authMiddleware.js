@@ -6,34 +6,37 @@ const { ACCESS_SECRET_KEY } = process.env;
 const authMiddleware = async (req, res, next) => {
   const { authorization = "" } = req.headers;
   const [bearer, token] = authorization.split(" ");
+  console.log(token);
+  console.log(bearer);
   try {
     if (bearer !== "Bearer" || !token) {
       return res.status(401).json({
-        message: "Not authorized",
+        message: "invalid token",
         clarification:
           "Please, provide a token in request authorization header",
       });
     }
 
     const { id } = jwt.verify(token, ACCESS_SECRET_KEY);
-    console.log(id);
-    // if (!id) {
-    //   return res.status(401).json({
-    //     message: "Not authorized",
-    //     clarification: "Token not have id",
-    //   });
-    // }
+    if (!id) {
+      return res.status(401).json({
+        message: "token expired",
+        clarification: "Token not have id",
+      });
+    }
+    console.log("User.findById(id)");
     const user = await User.findById(id);
-    // if (!user || !user.accessToken) {
-    //   return res.status(401).json({ message: "Not authorized" });
-    // }
+    console.log("User.findById(id)-------seccess");
+    console.log("user", user);
+    if (!user || !user.accessToken) {
+      return res.status(401).json({ message: "Not authorized" });
+    }
 
     req.user = user;
-    console.log(user);
     next();
   } catch (error) {
     return res.status(500).json({
-      message: "Not authorized",
+      message: "authMiddleware catch",
       clarification: "Invalid token",
       error,
     });

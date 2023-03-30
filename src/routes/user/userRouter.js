@@ -10,14 +10,15 @@ const { ctrlWrapper } = require("../../middlewares/ctrlWrapper");
 // - інформації про тварин корисувача, з коллекції pets.
 // userRouter.get("/user/about", authMiddleware, aboutUser);
 
-userRouter.get(
-  "/about",
-  authMiddleware,
-  ctrlWrapper(userController.aboutUserEndPets)
-);
+userRouter.get("/about", authMiddleware, userController.aboutUserEndPets);
 userRouter.post(
   "/refresh",
   ctrlWrapper(userController.refresh)
+);
+userRouter.post(
+  "/current",
+  authMiddleware,
+  ctrlWrapper(userController.current)
 );
 
 // userRouter.put(

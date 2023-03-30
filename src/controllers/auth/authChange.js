@@ -2,7 +2,6 @@ const { User } = require("../../schemas/user");
 
 async function authChange(req, res) {
   const credentials = req.body;
-  console.log(credentials);
   const { _id: contactId } = req.user;
 
   const { name, birthday, phone, city, avatarUrl, email } =
