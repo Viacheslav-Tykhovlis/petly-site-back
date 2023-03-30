@@ -12,12 +12,12 @@ const noticeByTitle = async (req, res, next) => {
       { name: 0, sex: 0, comments: 0, createdAt: 0, updatedAt: 0, owner: 0 }
     );
 
-    if (!result.length) {
-      return res.status(404).json({
-        message: "no data found",
-        code: 404,
-      });
-    }
+    // if (!result.length) {
+    //   return res.status(404).json({
+    //     message: "no data found",
+    //     code: 404,
+    //   });
+    // }
     return res.status(200).json({
       message: "list of notices by title",
       code: 200,

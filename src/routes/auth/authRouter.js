@@ -8,12 +8,6 @@ const authRouter = express.Router();
 
 authRouter.post("/signup", ctrlWrapper(authController.signup));
 authRouter.post("/login", ctrlWrapper(authController.login));
-// authRouter.patch(
-//   "/change",
-//   authMiddleware,
-//   uploadCloud.single("image"),
-//   ctrlWrapper(authController.authChange)
-// );
 authRouter.put(
   "/change",
   authMiddleware,

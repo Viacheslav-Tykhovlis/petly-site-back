@@ -12,8 +12,6 @@ const petSchema = Schema(
     },
     birthday: {
       type: String,
-      // required: [true, "Set in the format: dd-mm-yyyy"],
-      // trim: true,
     },
     breed: {
       type: String,
