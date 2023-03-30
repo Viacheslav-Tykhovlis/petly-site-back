@@ -1,4 +1,5 @@
 const { User } = require("../../schemas/user");
+const { Notice } = require("../../schemas/notices");
 
 const deleteNoticeFromFav = async (req, res) => {
   const { _id } = req.user;
@@ -9,6 +10,16 @@ const deleteNoticeFromFav = async (req, res) => {
     { $pull: { userLikePets: noticeId } }
   );
 
+  const notice = await Notice.findById(noticeId, {
+    name: 0,
+    sex: 0,
+    comments: 0,
+    createdAt: 0,
+    updatedAt: 0,
+    owner: 0,
+  });
+  console.log(notice);
+
   if (!result) {
     const error = new Error(`Not found`);
     error.status = 404;
@@ -18,6 +29,7 @@ const deleteNoticeFromFav = async (req, res) => {
     status: "success",
     code: 200,
     message: "notice deleted to favorites",
+    data: notice,
   });
 };
 

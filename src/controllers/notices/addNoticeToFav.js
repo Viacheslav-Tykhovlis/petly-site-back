@@ -10,7 +10,15 @@ const addNoticeToFav = async (req, res) => {
     { $push: { userLikePets: noticeId } }
   );
 
-  // как бы запретить закидывать дублирующийся айди ?
+  const notice = await Notice.findById(noticeId, {
+    name: 0,
+    sex: 0,
+    comments: 0,
+    createdAt: 0,
+    updatedAt: 0,
+    owner: 0,
+  });
+
   if (!result) {
     const error = new Error(`Not found`);
     error.status = 404;
@@ -21,7 +29,7 @@ const addNoticeToFav = async (req, res) => {
     status: "success",
     code: 200,
     message: "notice added to favorites",
-    // data: result,
+    data: notice,
   });
 };
 

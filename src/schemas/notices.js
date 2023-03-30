@@ -17,6 +17,7 @@ const noticeSchema = Schema(
     },
     birthdate: {
       type: String,
+      default: "null",
     },
     breed: {
       type: String,
@@ -32,6 +33,7 @@ const noticeSchema = Schema(
     },
     price: {
       type: Number,
+      default: 0,
     },
     image: {
       type: String,
