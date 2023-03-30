@@ -8,11 +8,17 @@ const authRouter = express.Router();
 
 authRouter.post("/signup", ctrlWrapper(authController.signup));
 authRouter.post("/login", ctrlWrapper(authController.login));
-authRouter.patch(
+// authRouter.patch(
+//   "/change",
+//   authMiddleware,
+//   uploadCloud.single("image"),
+//   ctrlWrapper(authController.authChange)
+// );
+authRouter.put(
   "/change",
   authMiddleware,
-  uploadCloud.single("image"),
-  ctrlWrapper(authController.authChange)
+  uploadCloud.single("avatarUrl"),
+  ctrlWrapper(authController.updateUser)
 );
 authRouter.get("/logout", authMiddleware, ctrlWrapper(authController.logout));
 

@@ -3,8 +3,6 @@ const { uploadCloud } = require("../../middlewares/uploadCloud");
 const { authMiddleware } = require("../../middlewares/authMiddleware");
 const { addPet, removeById } = require("../../controllers/pets");
 const { ctrlWrapper } = require("../../middlewares/ctrlWrapper");
-// const { validation } = require("../../middlewares/validation");
-// const { joiSchema } = require("../../schemas/pet");
 
 const petsRouter = express.Router();
 

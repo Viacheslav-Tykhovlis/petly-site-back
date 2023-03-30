@@ -19,7 +19,9 @@
   "paths": {
     "/auth/signup": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "User registration",
         "parameters": [],
         "requestBody": {
@@ -119,7 +121,9 @@
     },
     "/auth/login": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "User login",
         "parameters": [],
         "security": [],
@@ -288,7 +292,9 @@
     },
     "/auth/logout": {
       "get": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "User logout",
         "parameters": [],
         "security": [
@@ -320,7 +326,9 @@
     },
     "/servicessidebar": {
       "get": {
-        "tags": ["basic"],
+        "tags": [
+          "basic"
+        ],
         "summary": "Get services provided",
         "parameters": [],
         "security": [
@@ -358,7 +366,9 @@
     },
     "/news": {
       "get": {
-        "tags": ["basic"],
+        "tags": [
+          "basic"
+        ],
         "summary": "Get news",
         "responses": {
           "200": {
@@ -390,7 +400,9 @@
     },
     "/user/about": {
       "get": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "Get personal information about the user",
         "security": [
           {
@@ -515,7 +527,9 @@
     },
     "/user/current": {
       "put": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "editing user data",
         "security": [
           {
@@ -563,7 +577,9 @@
     },
     "/pets/pet": {
       "post": {
-        "tags": ["pets"],
+        "tags": [
+          "pets"
+        ],
         "summary": "adding a user animal card",
         "security": [
           {
@@ -611,7 +627,9 @@
     },
     "/pets/{petId}": {
       "delete": {
-        "tags": ["pets"],
+        "tags": [
+          "pets"
+        ],
         "summary": "deleting the card with the user's animal",
         "parameters": [
           {
@@ -659,7 +677,9 @@
     },
     "/notices/title/{title}": {
       "get": {
-        "tags": ["notices"],
+        "tags": [
+          "notices"
+        ],
         "summary": "Searching noties by title",
         "parameters": [
           {
@@ -707,7 +727,9 @@
     },
     "/notices/category/{category}": {
       "get": {
-        "tags": ["notices"],
+        "tags": [
+          "notices"
+        ],
         "summary": "Receiving noties by category",
         "parameters": [
           {
@@ -717,7 +739,13 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": ["sell", "lost-found", "for-free", "favorite", "own"]
+              "example": [
+                "sell",
+                "lost-found",
+                "for-free",
+                "favorite",
+                "own"
+              ]
             }
           }
         ],
@@ -756,7 +784,9 @@
     },
     "/notices/noticeId/{noticeId}": {
       "get": {
-        "tags": ["notices"],
+        "tags": [
+          "notices"
+        ],
         "summary": "Adding noties to the selected category",
         "parameters": [
           {
@@ -804,8 +834,10 @@
     },
     "/notices/addFavorite/{noticeId}": {
       "patch": {
-        "tags": ["notices"],
-        "summary": "deleting noties of an authorized user",
+        "tags": [
+          "notices"
+        ],
+        "summary": "Add noties by ID an authorized user",
         "parameters": [
           {
             "name": "noticeId",
@@ -852,8 +884,10 @@
     },
     "/notices/getFavorite": {
       "get": {
-        "tags": ["notices"],
-        "summary": "get noties of an authorized user",
+        "tags": [
+          "notices"
+        ],
+        "summary": "get favorite noties of an authorized user",
         "security": [
           {
             "Bearer": []
@@ -889,7 +923,9 @@
     },
     "/notices/delFavorite/{noticeId}": {
       "patch": {
-        "tags": ["notices"],
+        "tags": [
+          "notices"
+        ],
         "summary": "deleting noties of an authorized user",
         "parameters": [
           {
@@ -937,8 +973,10 @@
     },
     "/notices/create": {
       "post": {
-        "tags": ["notices"],
-        "summary": "deleting noties of an authorized user",
+        "tags": [
+          "notices"
+        ],
+        "summary": "create noties of an authorized user",
         "requestBody": {
           "description": "notice's data object",
           "required": true,
@@ -985,7 +1023,9 @@
     },
     "/notices/userNotices": {
       "get": {
-        "tags": ["notices"],
+        "tags": [
+          "notices"
+        ],
         "summary": "get noties of an authorized user",
         "security": [
           {
@@ -1022,7 +1062,9 @@
     },
     "/notices/delete/{noticeId}": {
       "delete": {
-        "tags": ["notices"],
+        "tags": [
+          "notices"
+        ],
         "summary": "deleting noties of an authorized user",
         "parameters": [
           {
@@ -1093,7 +1135,11 @@
       },
       "noticeShemaRequest": {
         "type": "object",
-        "required": ["title", "name", "owner"],
+        "required": [
+          "title",
+          "name",
+          "owner"
+        ],
         "properties": {
           "category": {
             "items": {
@@ -1242,7 +1288,10 @@
       },
       "User": {
         "type": "object",
-        "required": ["email", "password"],
+        "required": [
+          "email",
+          "password"
+        ],
         "properties": {
           "name": {
             "type": "string",
@@ -1335,7 +1384,10 @@
       },
       "Auth": {
         "type": "object",
-        "required": ["email", "password"],
+        "required": [
+          "email",
+          "password"
+        ],
         "properties": {
           "email": {
             "type": "string",

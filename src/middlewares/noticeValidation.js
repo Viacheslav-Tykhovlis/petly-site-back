@@ -9,11 +9,11 @@ const noticeValidation = (req, res, next) => {
       .pattern(new RegExp("[A-Za-zА-Яа-я]"))
       .required(),
     name: Joi.string().min(2).max(16).pattern(new RegExp("[A-Za-zА-Яа-я]")),
-    birthdate: Joi.string(),
+    birthdate: Joi.string().default(""),
     breed: Joi.string().min(2).max(24).pattern(new RegExp("[A-Za-zА-Яа-я]")),
     sex: Joi.string().valid("male", "female").required(),
     location: Joi.string().required(),
-    price: Joi.number().min(0.01),
+    price: Joi.number().default(0),
     image: Joi.string(),
     comments: Joi.string().min(8).max(120).pattern(new RegExp("[^0-9]")),
   });
