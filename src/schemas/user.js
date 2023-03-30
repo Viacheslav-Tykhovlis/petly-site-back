@@ -22,7 +22,7 @@ const schema = mongoose.Schema(
       default: null,
     },
     phone: {
-      type: Number,
+      type: String,
       default: null,
     },
     city: {
