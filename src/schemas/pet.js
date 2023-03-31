@@ -11,7 +11,9 @@ const petSchema = Schema(
       max: 16,
     },
     birthday: {
-      type: String,
+      type: Date,
+      required: [true, "Set in the format: dd.mm.yyyy"],
+      trim: true,
     },
     breed: {
       type: String,
@@ -21,9 +23,11 @@ const petSchema = Schema(
     },
     photo: {
       type: String,
+      required: true,
     },
     comments: {
       type: String,
+      required: true,
       min: 8,
       max: 120,
     },
@@ -40,6 +44,7 @@ const joiSchema = Joi.object({
   name: Joi.string().min(2).max(16).required(),
   birthday: Joi.date().required(),
   breed: Joi.string().min(2).max(16).required(),
+  photo: Joi.string().required(),
   comments: Joi.string().min(8).max(120).required(),
 });
 
