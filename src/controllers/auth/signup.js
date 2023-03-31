@@ -4,23 +4,19 @@ const { User } = require("../../schemas/user");
 const { authSchema } = require("../../schemas/joi");
 // const sendEmail = require("../../services/sendEmail");
 
-async function signup(req, res, next) {
-  try {
-    const { email, password } = req.body;
-    const { error } = authSchema.validate(req.body);
-    if (error) {
-      res.status(400).json({ message: "Invalid value of email or password" });
-      return;
-    }
-    const userCheck = await User.findOne({ email });
-    if (userCheck) {
-      res.status(409).json({ message: "Email in use" });
-      return;
-    }
 
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(password, salt);
-    const verificationToken = uuidv4();
+async function signup(req, res) {
+  const { email, password, phone, birthday, name, avatarUrl, city } = req.body;
+  const emailToLoWerCase = email.toLowerCase();
+
+  const userCheck = await User.findOne({ email: emailToLoWerCase });
+  if (userCheck) {
+    res.status(409).json({ message: "Email in use" });
+    return;
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = await User.create({
       email,

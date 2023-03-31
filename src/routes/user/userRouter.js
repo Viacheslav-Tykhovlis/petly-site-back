@@ -2,14 +2,15 @@ const express = require("express");
 const userRouter = express.Router();
 const { userController } = require("../../controllers");
 const { authMiddleware } = require("../../middlewares/authMiddleware");
+
 const { refresh } = require("../../controllers/user/refresh");
 const { ctrlWrapper } = require("../../middlewares/ctrlWrapper");
 // const { uploadCloud } = require("../../middlewares/uploadCloud");
 
+
 // 12. створити ендпоінт для отримання:
 // -  особистої інформації про користувача, з коллекції users
 // - інформації про тварин корисувача, з коллекції pets.
-// userRouter.get("/user/about", authMiddleware, aboutUser);
 
 userRouter.get(
   "/about",
@@ -22,12 +23,5 @@ userRouter.post(
   authMiddleware,
   ctrlWrapper(userController.current)
 );
-
-// userRouter.put(
-//   "/current",
-//   authMiddleware,
-//   uploadCloud.single("avatarUrl"),
-//   ctrlWrapper(userController.updateUser)
-// );
 
 module.exports = userRouter;
