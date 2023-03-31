@@ -5,7 +5,7 @@ const getUserFavNotices = async (req, res) => {
 
   const favorites = await User.find({ _id }, "userLikePets").populate(
     "userLikePets",
-    { name: 0, sex: 0, comments: 0, createdAt: 0, updatedAt: 0, owner: 0 }
+    { name: 0, sex: 0, comments: 0, owner: 0 }
   );
 
   res.status(200).json({

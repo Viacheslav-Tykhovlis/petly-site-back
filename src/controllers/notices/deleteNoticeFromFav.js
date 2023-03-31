@@ -14,8 +14,6 @@ const deleteNoticeFromFav = async (req, res) => {
     name: 0,
     sex: 0,
     comments: 0,
-    createdAt: 0,
-    updatedAt: 0,
     owner: 0,
   });
 

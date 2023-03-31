@@ -6,13 +6,6 @@ const noticesByOwner = async (req, res, next) => {
   try {
     const result = await Notice.find({ owner: _id });
 
-    // if (!result.length) {
-    //   return res.status(404).json({
-    //     message: "this user has no notices",
-    //     code: 404,
-    //   });
-    // }
-
     return res.status(200).json({
       message: "user notices",
       code: 200,
