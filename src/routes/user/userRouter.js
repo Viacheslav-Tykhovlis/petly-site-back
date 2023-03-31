@@ -3,7 +3,7 @@ const userRouter = express.Router();
 const { userController } = require("../../controllers");
 const { authMiddleware } = require("../../middlewares/authMiddleware");
 const { refresh } = require("../../controllers/user/refresh");
-// const { ctrlWrapper } = require("../../middlewares/ctrlWrapper");
+const { ctrlWrapper } = require("../../middlewares/ctrlWrapper");
 // const { uploadCloud } = require("../../middlewares/uploadCloud");
 
 // 12. створити ендпоінт для отримання:
@@ -11,9 +11,17 @@ const { refresh } = require("../../controllers/user/refresh");
 // - інформації про тварин корисувача, з коллекції pets.
 // userRouter.get("/user/about", authMiddleware, aboutUser);
 
-userRouter.get("/about", authMiddleware, userController.aboutUserEndPets);
+userRouter.get(
+  "/about",
+  authMiddleware,
+  ctrlWrapper(userController.aboutUserEndPets)
+);
 userRouter.post("/refresh", refresh);
-userRouter.post("/current", authMiddleware, userController.current);
+userRouter.post(
+  "/current",
+  authMiddleware,
+  ctrlWrapper(userController.current)
+);
 
 // userRouter.put(
 //   "/current",

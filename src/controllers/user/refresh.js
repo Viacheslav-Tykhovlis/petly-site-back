@@ -8,7 +8,7 @@ const getTokens = (id) => {
     id,
   };
   const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, {
-    expiresIn: "1m",
+    expiresIn: "24h",
   });
 
   const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
