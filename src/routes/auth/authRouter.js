@@ -6,8 +6,9 @@ const { uploadCloud } = require("../../middlewares/uploadCloud");
 
 const authRouter = express.Router();
 
-authRouter.post("/signup", authController.signup);
-authRouter.post("/login", authController.login);
+authRouter.post("/signup", ctrlWrapper(authController.signup));
+authRouter.post("/login", ctrlWrapper(authController.login));
+
 authRouter.put(
   "/change",
   authMiddleware,
