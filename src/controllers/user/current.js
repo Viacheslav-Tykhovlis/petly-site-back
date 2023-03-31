@@ -1,6 +1,6 @@
 const { User } = require("../../schemas/user");
 
-async function login(req, res, next) {
+async function current(req, res, next) {
   try {
     const { _id } = req.user;
     console.log(_id);
@@ -19,4 +19,4 @@ async function login(req, res, next) {
   }
 }
 
-module.exports = login;
+module.exports = current;

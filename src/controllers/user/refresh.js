@@ -1,12 +1,28 @@
 const jwt = require("jsonwebtoken");
 const { User } = require("../../schemas/user");
-const { ACCESS_SECRET_KEY } = process.env;
+const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
 // const { refreshSchema } = require("../../schemas/joi");
+
+const getTokens = (id) => {
+  const payload = {
+    id,
+  };
+  const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, {
+    expiresIn: "1m",
+  });
+
+  const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
+    expiresIn: "5m",
+  });
+  return { accessToken, refreshToken };
+};
 
 const refresh = async (req, res, next) => {
   try {
     const { refreshToken: token } = req.body;
-    const { REFRESH_SECRET_KEY } = process.env;
+    const { accessToken: asseToken } = req.body;
+
+
     // const { error } = refreshSchema.validate(req.body);
 
     // if (error) {
@@ -18,22 +34,15 @@ const refresh = async (req, res, next) => {
       return res.status(403).json({ message: "Token is not valid" });
     }
 
-     const getTokens = (id) => {
-       const payload = {
-         id,
-       };
-       const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, {
-         expiresIn: "1m",
-       });
-
-       const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
-         expiresIn: "5m",
-       });
-       return { accessToken, refreshToken };
-     };
-
-     const { accessToken, refreshToken } = getTokens(id);
-
+    const { accessToken, refreshToken } = getTokens(id);
+    console.log("accessToken", asseToken === accessToken);
+    if (asseToken === accessToken) {
+      return res.status(404).json({ message: "accessToken is the same" });
+    }
+    console.log("refreshToken", token === refreshToken);
+    if (token === refreshToken) {
+      return res.status(404).json({ message: "refreshToken is the same" });
+    }
     return res.status(200).json({
       accessToken,
       refreshToken,
@@ -43,4 +52,4 @@ const refresh = async (req, res, next) => {
   }
 };
 
-module.exports = refresh;
+module.exports = { refresh, getTokens };

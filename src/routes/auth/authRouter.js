@@ -1,25 +1,19 @@
 const express = require("express");
 const { authController } = require("../../controllers");
 const { authMiddleware } = require("../../middlewares/authMiddleware");
-const { ctrlWrapper } = require("../../middlewares/ctrlWrapper");
+// const { ctrlWrapper } = require("../../middlewares/ctrlWrapper");
 const { uploadCloud } = require("../../middlewares/uploadCloud");
 
 const authRouter = express.Router();
 
-authRouter.post("/signup", ctrlWrapper(authController.signup));
-authRouter.post("/login", ctrlWrapper(authController.login));
-// authRouter.patch(
-//   "/change",
-//   authMiddleware,
-//   uploadCloud.single("image"),
-//   ctrlWrapper(authController.authChange)
-// );
+authRouter.post("/signup", authController.signup);
+authRouter.post("/login", authController.login);
 authRouter.put(
   "/change",
   authMiddleware,
   uploadCloud.single("avatarUrl"),
-  ctrlWrapper(authController.updateUser)
+  authController.updateUser
 );
-authRouter.get("/logout", authMiddleware, ctrlWrapper(authController.logout));
+authRouter.get("/logout", authMiddleware, authController.logout);
 
 module.exports = authRouter;

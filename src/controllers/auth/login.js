@@ -1,8 +1,7 @@
 const bcrypt = require("bcrypt");
 const { User } = require("../../schemas/user");
 const { authSchema } = require("../../schemas/joi");
-const jwt = require("jsonwebtoken");
-const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
+const {getTokens} = require("../../controllers/user/refresh");
 
 async function login(req, res, next) {
   try {
@@ -21,20 +20,6 @@ async function login(req, res, next) {
     // if (!user.verify) {
     //   return res.status(401).json({ message: "Your Email is not verifyied!" });
     // }
-
-    const getTokens = (id) => {
-      const payload = {
-        id,
-      };
-      const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, {
-        expiresIn: "24h",
-      });
-
-      const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
-        expiresIn: "5m",
-      });
-      return { accessToken, refreshToken };
-    };
 
     const { accessToken, refreshToken } = getTokens(user._id);
 

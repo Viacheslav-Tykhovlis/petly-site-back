@@ -2,7 +2,8 @@ const express = require("express");
 const userRouter = express.Router();
 const { userController } = require("../../controllers");
 const { authMiddleware } = require("../../middlewares/authMiddleware");
-const { ctrlWrapper } = require("../../middlewares/ctrlWrapper");
+const { refresh } = require("../../controllers/user/refresh");
+// const { ctrlWrapper } = require("../../middlewares/ctrlWrapper");
 // const { uploadCloud } = require("../../middlewares/uploadCloud");
 
 // 12. створити ендпоінт для отримання:
@@ -11,15 +12,8 @@ const { ctrlWrapper } = require("../../middlewares/ctrlWrapper");
 // userRouter.get("/user/about", authMiddleware, aboutUser);
 
 userRouter.get("/about", authMiddleware, userController.aboutUserEndPets);
-userRouter.post(
-  "/refresh",
-  ctrlWrapper(userController.refresh)
-);
-userRouter.post(
-  "/current",
-  authMiddleware,
-  ctrlWrapper(userController.current)
-);
+userRouter.post("/refresh", refresh);
+userRouter.post("/current", authMiddleware, userController.current);
 
 // userRouter.put(
 //   "/current",
