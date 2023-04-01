@@ -3,7 +3,6 @@ const { User } = require("../../schemas/user");
 async function current(req, res, next) {
   try {
     const { _id } = req.user;
-    console.log(_id);
 
     const user = await User.findById(_id);
 
